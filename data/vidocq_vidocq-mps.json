@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "vidocq/vidocq-mps",
   "branch": "main",
-  "commit_sha": "379b188498d82c284d2a1477a313ce674a41275d",
-  "updated_at": "2026-05-10T14:31:27Z",
+  "commit_sha": "9be692a3ec7c6f58a37b9235447aaaf81e860f20",
+  "updated_at": "2026-05-10T16:51:06Z",
   "produces": [
     {
       "groupId": "io.vidocq.mpserver",
@@ -38,6 +38,11 @@
     {
       "groupId": "io.vidocq.mpserver",
       "artifactId": "vidocq-mps-integration-tests",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-knock-extension",
       "version": ""
     },
     {
@@ -123,6 +128,13 @@
       "type": "jar"
     },
     {
+      "groupId": "io.vidocq.champollion",
+      "artifactId": "champollion-jsonp",
+      "version": "${champollion.version}",
+      "scope": "runtime",
+      "type": "jar"
+    },
+    {
       "groupId": "io.vidocq.chappe",
       "artifactId": "chappe-api",
       "version": "0.1.0-SNAPSHOT",
@@ -147,6 +159,20 @@
       "groupId": "io.vidocq.chappe",
       "artifactId": "chappe-http",
       "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.knock",
+      "artifactId": "knock-cassini",
+      "version": "${knock.version}",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.knock",
+      "artifactId": "knock-cdi-vauban",
+      "version": "${knock.version}",
       "scope": "compile",
       "type": "jar"
     },
