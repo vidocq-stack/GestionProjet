@@ -15,9 +15,12 @@ jobs:
         with:
           token: ${{ secrets.VIDOCQ_BOT_TOKEN }}
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: S'assure que python3 est disponible
+        run: |
+          if ! command -v python3 >/dev/null 2>&1; then
+            apt-get update && apt-get install -y --no-install-recommends python3
+          fi
+          python3 --version
 
       # Évite la boucle si seul graph/inverted.json a changé dans le commit déclencheur.
       - name: Sortie anticipée si seul inverted.json a changé

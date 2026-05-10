@@ -22,9 +22,12 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      - name: S'assure que python3 et curl sont disponibles
+        run: |
+          if ! command -v python3 >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
+            apt-get update && apt-get install -y --no-install-recommends python3 curl ca-certificates
+          fi
+          python3 --version
 
       - name: Récupère les scripts depuis GestionProjet
         run: |
