@@ -40,8 +40,9 @@ GestionProjet/
 ├── .forgejo/workflows/
 │   └── build-graph.yml          Reconstruit `graph/inverted.json` sur push `data/**`.
 ├── workflow-templates/
-│   ├── update-dep-graph.yml     À copier dans chaque consommateur.
-│   └── trigger-downstream.yml   À copier dans chaque producteur (jobs CI).
+│   ├── update-dep-graph.yml     À copier dans chaque repo (maintien du graphe).
+│   ├── pr-producer.yml          Référence — à fusionner dans le ci.yml producteur.
+│   └── upstream-pr-consumer.yml À copier dans chaque consommateur (réception dispatch).
 ├── Makefile                     Cibles locales (graph, impact, test, validate).
 └── README.md                    Ce fichier.
 ```
