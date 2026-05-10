@@ -1,15 +1,19 @@
-.PHONY: graph impact test clean validate help
+.PHONY: graph check impact test clean validate help
 
 help:
 	@echo "Cibles disponibles :"
-	@echo "  make graph                                   Reconstruit graph/inverted.json depuis data/*.json"
+	@echo "  make graph                                   Reconstruit graph/inverted.json depuis data/*.json (verbose)"
+	@echo "  make check                                   Dry-run : sort 1 si au moins un warning (orphelin, collision, schéma)"
 	@echo "  make impact ARTIFACT=g:a [DEPTH=N|all]       Liste les repos impactés par un changement"
 	@echo "  make test                                    Lance les tests unitaires Python"
 	@echo "  make validate                                Vérifie que tous les data/*.json suivent le schéma"
 	@echo "  make clean                                   Supprime graph/inverted.json"
 
 graph:
-	python3 scripts/build_inverted_graph.py
+	python3 scripts/build_inverted_graph.py --verbose
+
+check:
+	python3 scripts/build_inverted_graph.py --check
 
 impact:
 	@test -n "$(ARTIFACT)" || (echo "Usage: make impact ARTIFACT=io.vidocq.vauban:vauban-core [DEPTH=all|N]" && exit 1)

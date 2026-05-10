@@ -3,18 +3,35 @@
 
 Usage :
   resolve_impact.py --graph graph/inverted.json --changed g:a [g:a ...] [--depth N|all]
-                    [--format json|matrix]
+                    [--format json|matrix] [--verbose]
 
 Algo : BFS sur le graphe inversé. Niveau 1 = consommateurs directs. Pour chaque consommateur
 on regarde les artefacts qu'il *produit* lui-même, et on enchaîne sur leurs consommateurs.
+
+`--verbose` active les logs DEBUG montrant l'avancement de la BFS pas à pas.
 """
 from __future__ import annotations
 
 import argparse
 import json
+import logging
 import sys
 from collections import deque
 from pathlib import Path
+
+LOG_FORMAT = "[%(levelname)s] %(message)s"
+logger = logging.getLogger("resolve_impact")
+
+
+def setup_logging(verbose: bool) -> None:
+    level = logging.DEBUG if verbose else logging.INFO
+    handler = logging.StreamHandler(sys.stderr)
+    handler.setFormatter(logging.Formatter(LOG_FORMAT))
+    handler.setLevel(level)
+    logger.handlers.clear()
+    logger.addHandler(handler)
+    logger.setLevel(level)
+    logger.propagate = False
 
 
 def parse_args() -> argparse.Namespace:
@@ -37,6 +54,10 @@ def parse_args() -> argparse.Namespace:
         default="json",
         help="Format de sortie : json (par défaut) ou matrix (Forgejo Actions)",
     )
+    p.add_argument(
+        "--verbose", action="store_true",
+        help="Active les logs DEBUG (BFS pas à pas).",
+    )
     return p.parse_args()
 
 
@@ -46,7 +67,6 @@ def load_graph(path: Path) -> dict:
 
 
 def repo_to_artifacts(graph: dict) -> dict[str, list[str]]:
-    """Inverse partiel : repo producteur -> [g:a, ...]."""
     out: dict[str, list[str]] = {}
     for key, entry in graph.get("artifacts", {}).items():
         prod = entry.get("produced_by")
@@ -65,7 +85,6 @@ def resolve_impact(graph: dict, changed: list[str], max_depth: int | None) -> li
     by_repo = repo_to_artifacts(graph)
 
     impacted: set[str] = set()
-    # File : (artefact_g_a, depth)
     queue: deque[tuple[str, int]] = deque()
     seen_artifacts: set[str] = set()
 
@@ -73,36 +92,42 @@ def resolve_impact(graph: dict, changed: list[str], max_depth: int | None) -> li
         if art in artifacts_index:
             queue.append((art, 0))
             seen_artifacts.add(art)
+            logger.debug("Seed BFS : %s @ profondeur 0", art)
         else:
-            print(
-                f"resolve_impact: artefact inconnu dans le graphe : {art}",
-                file=sys.stderr,
-            )
+            logger.warning("Artefact inconnu dans le graphe : %s", art)
 
     while queue:
         art, depth = queue.popleft()
+        logger.debug("Visite %s @ profondeur %d", art, depth)
         if max_depth is not None and depth >= max_depth:
+            logger.debug("  profondeur max atteinte (%d), skip.", max_depth)
             continue
         consumers = artifacts_index.get(art, {}).get("consumed_by", [])
         for c in consumers:
             repo = c["repo"]
             if repo in impacted:
+                logger.debug("  consommateur %s déjà connu, skip.", repo)
                 continue
             impacted.add(repo)
-            # Niveau suivant : on enchaîne sur les artefacts produits par ce repo.
+            logger.debug("  + %s ajouté aux impactés (via %s, scope=%s).",
+                         repo, art, c.get("scope"))
             for a2 in by_repo.get(repo, []):
                 if a2 not in seen_artifacts:
                     seen_artifacts.add(a2)
                     queue.append((a2, depth + 1))
+                    logger.debug("    enqueue %s @ profondeur %d", a2, depth + 1)
 
+    logger.debug("BFS terminée : %d repo(s) impacté(s).", len(impacted))
     return sorted(impacted)
 
 
 def main() -> int:
     args = parse_args()
+    setup_logging(args.verbose)
+
     graph_path = Path(args.graph)
     if not graph_path.is_file():
-        print(f"resolve_impact: graphe introuvable : {graph_path}", file=sys.stderr)
+        logger.error("Graphe introuvable : %s", graph_path)
         return 1
     graph = load_graph(graph_path)
 
@@ -114,10 +139,7 @@ def main() -> int:
             if max_depth < 0:
                 raise ValueError
         except ValueError:
-            print(
-                f"resolve_impact: --depth doit être un entier >=0 ou 'all', reçu : {args.depth}",
-                file=sys.stderr,
-            )
+            logger.error("--depth doit être un entier >=0 ou 'all', reçu : %s", args.depth)
             return 2
 
     impacted = resolve_impact(graph, args.changed, max_depth)

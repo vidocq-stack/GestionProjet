@@ -1,9 +1,8 @@
 """Tests unitaires pour build_inverted_graph et resolve_impact."""
-import io
 import json
 import sys
+import tempfile
 import unittest
-from contextlib import redirect_stderr
 from pathlib import Path
 
 # Ajoute le répertoire parent (scripts/) au path pour importer les modules.
@@ -32,6 +31,11 @@ def art(g, a, version="1.0.0-SNAPSHOT", scope="compile"):
 
 def prod(g, a, version="1.0.0-SNAPSHOT"):
     return {"groupId": g, "artifactId": a, "version": version}
+
+
+def write_payloads(tmp: Path, payloads: list[tuple[str, dict]]) -> None:
+    for fname, p in payloads:
+        (tmp / fname).write_text(json.dumps(p), encoding="utf-8")
 
 
 class BuildGraphTests(unittest.TestCase):
@@ -101,7 +105,6 @@ class BuildGraphTests(unittest.TestCase):
         self.assertEqual(depth_all, ["vidocq/b", "vidocq/c"])
 
     def test_cycle_warning_no_crash(self):
-        # B consomme A et A consomme B (cycle pathologique).
         payloads = [
             make_payload(
                 "vidocq/a",
@@ -114,34 +117,30 @@ class BuildGraphTests(unittest.TestCase):
                 consumes=[art("io.vidocq.a", "core")],
             ),
         ]
-        buf = io.StringIO()
-        with redirect_stderr(buf):
+        with self.assertLogs("build_inverted_graph", level="WARNING") as ctx:
             graph = builder.build(payloads)
-        self.assertIn("cycle détecté", buf.getvalue())
+        self.assertTrue(
+            any("Cycle détecté" in line for line in ctx.output),
+            f"attendu 'Cycle détecté' dans : {ctx.output}",
+        )
         impacted = resolver.resolve_impact(graph, ["io.vidocq.a:core"], max_depth=None)
         self.assertEqual(impacted, ["vidocq/a", "vidocq/b"])
 
     def test_external_repo_filtered(self):
-        # Un repo hors `vidocq/*` doit être ignoré par load_data_files.
-        # On simule en appelant directement build (qui ne filtre pas) — la whitelist
-        # est dans load_data_files.
-        # Test fonctionnel : load_data_files sur un dossier avec un mauvais repo.
-        import tempfile
-
         with tempfile.TemporaryDirectory() as td:
             data_dir = Path(td)
-            (data_dir / "vidocq_a.json").write_text(
-                json.dumps(make_payload("vidocq/a", produces=[prod("io.vidocq.a", "core")]))
-            )
-            (data_dir / "external_b.json").write_text(
-                json.dumps(make_payload("external/b", consumes=[art("io.vidocq.a", "core")]))
-            )
-            buf = io.StringIO()
-            with redirect_stderr(buf):
+            write_payloads(data_dir, [
+                ("vidocq_a.json", make_payload("vidocq/a", produces=[prod("io.vidocq.a", "core")])),
+                ("external_b.json", make_payload("external/b", consumes=[art("io.vidocq.a", "core")])),
+            ])
+            with self.assertLogs("build_inverted_graph", level="WARNING") as ctx:
                 payloads = builder.load_data_files(data_dir)
             self.assertEqual(len(payloads), 1)
             self.assertEqual(payloads[0]["repo"], "vidocq/a")
-            self.assertIn("hors whitelist", buf.getvalue())
+            self.assertTrue(
+                any("hors whitelist" in line for line in ctx.output),
+                f"attendu 'hors whitelist' dans : {ctx.output}",
+            )
 
 
 class ResolveImpactCliTests(unittest.TestCase):
@@ -155,6 +154,40 @@ class ResolveImpactCliTests(unittest.TestCase):
         impacted = resolver.resolve_impact(graph, ["io.vidocq.a:core"], None)
         matrix = {"include": [{"repo": r} for r in impacted]}
         self.assertEqual(matrix, {"include": [{"repo": "vidocq/b"}]})
+
+
+class CheckModeTests(unittest.TestCase):
+    """Le sous-mode --check : exit 0 sur graphe sain, exit 1 sur warning."""
+
+    def test_check_orphan_returns_1(self):
+        # vidocq/b consomme io.vidocq.a:core mais aucun repo ne le produit -> orphelin.
+        with tempfile.TemporaryDirectory() as td:
+            data_dir = Path(td)
+            write_payloads(data_dir, [
+                ("vidocq_b.json", make_payload(
+                    "vidocq/b", consumes=[art("io.vidocq.a", "core")]
+                )),
+            ])
+            code, warnings = builder.run_check(data_dir)
+        self.assertEqual(code, 1, "un orphelin doit faire échouer --check")
+        self.assertGreaterEqual(warnings, 1)
+
+    def test_check_clean_graph_returns_0(self):
+        with tempfile.TemporaryDirectory() as td:
+            data_dir = Path(td)
+            write_payloads(data_dir, [
+                ("vidocq_a.json", make_payload(
+                    "vidocq/a", produces=[prod("io.vidocq.a", "core")]
+                )),
+                ("vidocq_b.json", make_payload(
+                    "vidocq/b",
+                    produces=[prod("io.vidocq.b", "core")],
+                    consumes=[art("io.vidocq.a", "core")],
+                )),
+            ])
+            code, warnings = builder.run_check(data_dir)
+        self.assertEqual(code, 0, f"graphe sain attendu, warnings={warnings}")
+        self.assertEqual(warnings, 0)
 
 
 if __name__ == "__main__":
