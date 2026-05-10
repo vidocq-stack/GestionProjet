@@ -13,7 +13,7 @@
 discover-impact:
   needs: build
   if: github.event_name == 'pull_request'
-  runs-on: self-hosted
+  runs-on: ubuntu-latest
   outputs:
     matrix: ${{ steps.resolve.outputs.matrix }}
     has_consumers: ${{ steps.resolve.outputs.has_consumers }}
@@ -74,7 +74,7 @@ discover-impact:
 trigger-downstream:
   needs: [build, discover-impact]
   if: needs.discover-impact.outputs.has_consumers == 'true'
-  runs-on: self-hosted
+  runs-on: ubuntu-latest
   strategy:
     fail-fast: false
     matrix: ${{ fromJson(needs.discover-impact.outputs.matrix) }}
@@ -102,7 +102,7 @@ trigger-downstream:
 verify-downstream:
   needs: [discover-impact, trigger-downstream]
   if: needs.discover-impact.outputs.has_consumers == 'true'
-  runs-on: self-hosted
+  runs-on: ubuntu-latest
   steps:
     - name: Attend les statuts downstream
       run: |
