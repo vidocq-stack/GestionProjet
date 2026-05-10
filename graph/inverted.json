@@ -30,6 +30,14 @@
     "io.vidocq.cassini:cassini-core": {
       "consumed_by": [
         {
+          "repo": "vidocq/knock",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/knock",
+          "scope": "test"
+        },
+        {
           "repo": "vidocq/vidocq-mps",
           "scope": "compile"
         },
@@ -103,6 +111,18 @@
         {
           "repo": "vidocq/cassini",
           "scope": "compile"
+        },
+        {
+          "repo": "vidocq/knock",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/knock",
+          "scope": "test"
+        },
+        {
+          "repo": "vidocq/vidocq-mps",
+          "scope": "runtime"
         }
       ],
       "produced_by": "vidocq/champollion"
@@ -213,6 +233,36 @@
     "io.vidocq.foy:foy-parent": {
       "consumed_by": [],
       "produced_by": "vidocq/foy"
+    },
+    "io.vidocq.knock:knock-api": {
+      "consumed_by": [],
+      "produced_by": "vidocq/knock"
+    },
+    "io.vidocq.knock:knock-cassini": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq-mps",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/knock"
+    },
+    "io.vidocq.knock:knock-cdi-vauban": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq-mps",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/knock"
+    },
+    "io.vidocq.knock:knock-core": {
+      "consumed_by": [],
+      "produced_by": "vidocq/knock"
+    },
+    "io.vidocq.knock:knock-parent": {
+      "consumed_by": [],
+      "produced_by": "vidocq/knock"
     },
     "io.vidocq.mansart:mansart-data-cdi": {
       "consumed_by": [
@@ -361,6 +411,10 @@
       "consumed_by": [],
       "produced_by": "vidocq/vidocq-mps"
     },
+    "io.vidocq.mpserver:vidocq-mps-knock-extension": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq-mps"
+    },
     "io.vidocq.mpserver:vidocq-mps-mansart-data-extension": {
       "consumed_by": [],
       "produced_by": "vidocq/vidocq-mps"
@@ -402,6 +456,10 @@
         {
           "repo": "vidocq/cassini",
           "scope": "compile"
+        },
+        {
+          "repo": "vidocq/vidocq-mps",
+          "scope": "compile"
         }
       ],
       "produced_by": "vidocq/ravel"
@@ -415,6 +473,10 @@
         {
           "repo": "vidocq/cassini",
           "scope": "compile"
+        },
+        {
+          "repo": "vidocq/vidocq-mps",
+          "scope": "compile"
         }
       ],
       "produced_by": "vidocq/ravel"
@@ -423,6 +485,10 @@
       "consumed_by": [
         {
           "repo": "vidocq/cassini",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/vidocq-mps",
           "scope": "compile"
         }
       ],
@@ -472,6 +538,14 @@
           "scope": "runtime"
         },
         {
+          "repo": "vidocq/knock",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/knock",
+          "scope": "test"
+        },
+        {
           "repo": "vidocq/ravel",
           "scope": "test"
         },
@@ -495,6 +569,14 @@
         {
           "repo": "vidocq/foy",
           "scope": "compile"
+        },
+        {
+          "repo": "vidocq/knock",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/knock",
+          "scope": "test"
         },
         {
           "repo": "vidocq/mansart",
@@ -567,6 +649,6 @@
       "produced_by": "vidocq/vauban"
     }
   },
-  "generated_at": "2026-05-10T13:51:49Z",
+  "generated_at": "2026-05-10T17:28:42Z",
   "schema_version": 1
 }
