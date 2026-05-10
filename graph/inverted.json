@@ -1,0 +1,556 @@
+{
+  "artifacts": {
+    "io.vidocq.cassini:cassini-api": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.cassini:cassini-cdi-vauban": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.cassini:cassini-chappe": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.cassini:cassini-core": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "runtime"
+        }
+      ],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.cassini:cassini-examples": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.cassini:cassini-examples-chappe": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.cassini:cassini-examples-jdkhttp": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.cassini:cassini-examples-vauban": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.cassini:cassini-jdk-http": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.cassini:cassini-parent": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cassini"
+    },
+    "io.vidocq.champollion:champollion-api": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/champollion"
+    },
+    "io.vidocq.champollion:champollion-bench": {
+      "consumed_by": [],
+      "produced_by": "vidocq/champollion"
+    },
+    "io.vidocq.champollion:champollion-codegen-apt": {
+      "consumed_by": [],
+      "produced_by": "vidocq/champollion"
+    },
+    "io.vidocq.champollion:champollion-codegen-maven-plugin": {
+      "consumed_by": [],
+      "produced_by": "vidocq/champollion"
+    },
+    "io.vidocq.champollion:champollion-examples": {
+      "consumed_by": [],
+      "produced_by": "vidocq/champollion"
+    },
+    "io.vidocq.champollion:champollion-jsonb": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/champollion"
+    },
+    "io.vidocq.champollion:champollion-jsonp": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/champollion"
+    },
+    "io.vidocq.champollion:champollion-parent": {
+      "consumed_by": [],
+      "produced_by": "vidocq/champollion"
+    },
+    "io.vidocq.chappe:chappe-api": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/foy",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.chappe:chappe-bench": {
+      "consumed_by": [],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.chappe:chappe-cli": {
+      "consumed_by": [],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.chappe:chappe-conformance": {
+      "consumed_by": [],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.chappe:chappe-core": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/cassini",
+          "scope": "runtime"
+        },
+        {
+          "repo": "vidocq/foy",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/foy",
+          "scope": "test"
+        },
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "runtime"
+        }
+      ],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.chappe:chappe-examples": {
+      "consumed_by": [],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.chappe:chappe-http": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.chappe:chappe-parent": {
+      "consumed_by": [],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.chappe:chappe-static-index-maven-plugin": {
+      "consumed_by": [],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.chappe:chappe-tests": {
+      "consumed_by": [],
+      "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.foy:foy-api": {
+      "consumed_by": [],
+      "produced_by": "vidocq/foy"
+    },
+    "io.vidocq.foy:foy-cdi-vauban": {
+      "consumed_by": [],
+      "produced_by": "vidocq/foy"
+    },
+    "io.vidocq.foy:foy-chappe": {
+      "consumed_by": [],
+      "produced_by": "vidocq/foy"
+    },
+    "io.vidocq.foy:foy-core": {
+      "consumed_by": [],
+      "produced_by": "vidocq/foy"
+    },
+    "io.vidocq.foy:foy-parent": {
+      "consumed_by": [],
+      "produced_by": "vidocq/foy"
+    },
+    "io.vidocq.mansart:mansart-data-cdi": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-data-core": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-data-dialect-h2": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "runtime"
+        }
+      ],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-data-dialect-postgresql": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-data-dialect-spi": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-data-dialects": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-data-processor": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "provided"
+        }
+      ],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-data-tests": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-jakarta-data": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-pool": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-pool-api": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-pool-bench": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-pool-core": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-pool-tests": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-transactions": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-transactions-api": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-transactions-cdi": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-transactions-core": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-transactions-jdbc": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-transactions-tests": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mansart:mansart-workspace": {
+      "consumed_by": [],
+      "produced_by": "vidocq/mansart"
+    },
+    "io.vidocq.mpserver:vidocq-mps-arquillian": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-chappe-extension": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-core": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-core-extensions": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-examples": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-external-rest-lib": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-integration-tests": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-mansart-data-extension": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-mansart-h2-example": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-mansart-pool-extension": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-mansart-transactions-extension": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-maven-plugin": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-parent": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-rest-cassini-extension": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-rest-example": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.mpserver:vidocq-mps-spi": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vidocq"
+    },
+    "io.vidocq.ravel:ravel-api": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": null
+    },
+    "io.vidocq.ravel:ravel-cdi-vauban": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": null
+    },
+    "io.vidocq.ravel:ravel-core": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": null
+    },
+    "io.vidocq.vauban:example-app": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:example-lib": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:example-lib-securized": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:example-test": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-api": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/foy",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-classloader-spi": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "runtime"
+        },
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "runtime"
+        }
+      ],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-core": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/foy",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/mansart",
+          "scope": "test"
+        },
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-examples": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-indexer": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-junit": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/mansart",
+          "scope": "test"
+        }
+      ],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-maven-plugin": {
+      "consumed_by": [
+        {
+          "repo": "vidocq/cassini",
+          "scope": "build"
+        },
+        {
+          "repo": "vidocq/vidocq",
+          "scope": "compile"
+        }
+      ],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-parent": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-processor": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-sjar": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-tck-runner": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    },
+    "io.vidocq.vauban:vauban-test-suite": {
+      "consumed_by": [],
+      "produced_by": "vidocq/vauban"
+    }
+  },
+  "generated_at": "2026-05-10T12:55:45Z",
+  "schema_version": 1
+}

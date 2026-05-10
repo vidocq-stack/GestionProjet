@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "repo": "vidocq/vidocq",
+  "branch": "main",
+  "commit_sha": "9be4641f45e05fcc728f5013fc8fb52edb744477",
+  "updated_at": "2026-05-10T12:53:52Z",
+  "produces": [
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-arquillian",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-chappe-extension",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-core",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-core-extensions",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-examples",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-external-rest-lib",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-integration-tests",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-mansart-data-extension",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-mansart-h2-example",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-mansart-pool-extension",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-mansart-transactions-extension",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-maven-plugin",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-parent",
+      "version": "0.1.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-rest-cassini-extension",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-rest-example",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-spi",
+      "version": ""
+    }
+  ],
+  "consumes": [
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-api",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-cdi-vauban",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-chappe",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-core",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-core",
+      "version": "",
+      "scope": "runtime",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.chappe",
+      "artifactId": "chappe-api",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.chappe",
+      "artifactId": "chappe-core",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.chappe",
+      "artifactId": "chappe-core",
+      "version": "",
+      "scope": "runtime",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.chappe",
+      "artifactId": "chappe-http",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-data-cdi",
+      "version": "1.0.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-data-core",
+      "version": "1.0.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-data-dialect-h2",
+      "version": "1.0.0-SNAPSHOT",
+      "scope": "runtime",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-data-processor",
+      "version": "1.0.0-SNAPSHOT",
+      "scope": "provided",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-pool-api",
+      "version": "1.0.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-pool-core",
+      "version": "1.0.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-transactions-cdi",
+      "version": "1.0.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-api",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-classloader-spi",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-classloader-spi",
+      "version": "",
+      "scope": "runtime",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-core",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-indexer",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-maven-plugin",
+      "version": "${vauban.version}",
+      "scope": "compile",
+      "type": "jar"
+    }
+  ]
+}

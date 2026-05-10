@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "repo": "vidocq/champollion",
+  "branch": "main",
+  "commit_sha": "4aa1941fd056acb1b940a6f1acf37c88d182f4ec",
+  "updated_at": "2026-05-10T12:53:52Z",
+  "produces": [
+    {
+      "groupId": "io.vidocq.champollion",
+      "artifactId": "champollion-api",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.champollion",
+      "artifactId": "champollion-bench",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.champollion",
+      "artifactId": "champollion-codegen-apt",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.champollion",
+      "artifactId": "champollion-codegen-maven-plugin",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.champollion",
+      "artifactId": "champollion-examples",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.champollion",
+      "artifactId": "champollion-jsonb",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.champollion",
+      "artifactId": "champollion-jsonp",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.champollion",
+      "artifactId": "champollion-parent",
+      "version": "0.1.0-SNAPSHOT"
+    }
+  ],
+  "consumes": []
+}

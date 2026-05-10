@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "repo": "vidocq/foy",
+  "branch": "main",
+  "commit_sha": "9115d96f4ea0adddb582e38a9a60098448f08102",
+  "updated_at": "2026-05-10T12:53:52Z",
+  "produces": [
+    {
+      "groupId": "io.vidocq.foy",
+      "artifactId": "foy-api",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.foy",
+      "artifactId": "foy-cdi-vauban",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.foy",
+      "artifactId": "foy-chappe",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.foy",
+      "artifactId": "foy-core",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.foy",
+      "artifactId": "foy-parent",
+      "version": "0.1.0-SNAPSHOT"
+    }
+  ],
+  "consumes": [
+    {
+      "groupId": "io.vidocq.chappe",
+      "artifactId": "chappe-api",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.chappe",
+      "artifactId": "chappe-core",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.chappe",
+      "artifactId": "chappe-core",
+      "version": "",
+      "scope": "test",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-api",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-core",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    }
+  ]
+}
