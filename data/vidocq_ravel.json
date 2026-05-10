@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "repo": "vidocq/ravel",
+  "branch": "main",
+  "commit_sha": "3ec73afb3cc76454cb5ef899f8d6254453830142",
+  "updated_at": "2026-05-10T13:49:47Z",
+  "produces": [
+    {
+      "groupId": "io.vidocq.ravel",
+      "artifactId": "ravel-api",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.ravel",
+      "artifactId": "ravel-bench",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.ravel",
+      "artifactId": "ravel-cdi-vauban",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.ravel",
+      "artifactId": "ravel-core",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.ravel",
+      "artifactId": "ravel-parent",
+      "version": "0.1.0-SNAPSHOT"
+    }
+  ],
+  "consumes": [
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-classloader-spi",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "test",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-core",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "test",
+      "type": "jar"
+    }
+  ]
+}
