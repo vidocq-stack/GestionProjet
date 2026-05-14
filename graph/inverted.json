@@ -102,6 +102,14 @@
         {
           "repo": "vidocq/cassini",
           "scope": "compile"
+        },
+        {
+          "repo": "vidocq/cyrano",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/cyrano",
+          "scope": "test"
         }
       ],
       "produced_by": "vidocq/champollion"
@@ -111,6 +119,14 @@
         {
           "repo": "vidocq/cassini",
           "scope": "compile"
+        },
+        {
+          "repo": "vidocq/cyrano",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/cyrano",
+          "scope": "test"
         },
         {
           "repo": "vidocq/knock",
@@ -213,6 +229,22 @@
     "io.vidocq.chappe:chappe-tests": {
       "consumed_by": [],
       "produced_by": "vidocq/chappe"
+    },
+    "io.vidocq.cyrano:cyrano-api": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cyrano"
+    },
+    "io.vidocq.cyrano:cyrano-cdi-vauban": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cyrano"
+    },
+    "io.vidocq.cyrano:cyrano-core": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cyrano"
+    },
+    "io.vidocq.cyrano:cyrano-parent": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cyrano"
     },
     "io.vidocq.foy:foy-api": {
       "consumed_by": [],
@@ -494,6 +526,10 @@
       ],
       "produced_by": "vidocq/ravel"
     },
+    "io.vidocq.ravel:ravel-mp-config-api": {
+      "consumed_by": [],
+      "produced_by": "vidocq/ravel"
+    },
     "io.vidocq.ravel:ravel-parent": {
       "consumed_by": [],
       "produced_by": "vidocq/ravel"
@@ -538,6 +574,14 @@
           "scope": "runtime"
         },
         {
+          "repo": "vidocq/cyrano",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/cyrano",
+          "scope": "test"
+        },
+        {
           "repo": "vidocq/knock",
           "scope": "compile"
         },
@@ -565,6 +609,14 @@
         {
           "repo": "vidocq/cassini",
           "scope": "compile"
+        },
+        {
+          "repo": "vidocq/cyrano",
+          "scope": "compile"
+        },
+        {
+          "repo": "vidocq/cyrano",
+          "scope": "test"
         },
         {
           "repo": "vidocq/foy",
@@ -649,6 +701,6 @@
       "produced_by": "vidocq/vauban"
     }
   },
-  "generated_at": "2026-05-10T17:29:10Z",
+  "generated_at": "2026-05-14T09:05:30Z",
   "schema_version": 1
 }
