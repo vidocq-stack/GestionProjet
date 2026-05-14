@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "vidocq/vidocq-mps",
   "branch": "main",
-  "commit_sha": "0bcf47c572ee4a0ec50aba21d74b7deb3e07a7a7",
-  "updated_at": "2026-05-11T14:05:32Z",
+  "commit_sha": "bbaa44aa0400717c430d75c5fdd736d66bf62c48",
+  "updated_at": "2026-05-14T09:09:41Z",
   "produces": [
     {
       "groupId": "io.vidocq.mpserver",
@@ -23,6 +23,11 @@
     {
       "groupId": "io.vidocq.mpserver",
       "artifactId": "vidocq-mps-core-extensions",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-cyrano-extension",
       "version": ""
     },
     {
@@ -158,6 +163,27 @@
     {
       "groupId": "io.vidocq.chappe",
       "artifactId": "chappe-http",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cyrano",
+      "artifactId": "cyrano-api",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cyrano",
+      "artifactId": "cyrano-cdi-vauban",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cyrano",
+      "artifactId": "cyrano-core",
       "version": "0.1.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
