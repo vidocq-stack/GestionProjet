@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "vidocq/chappe",
   "branch": "main",
-  "commit_sha": "1acbe237f2713c7d68f83aac166bad99c62b76a0",
-  "updated_at": "2026-05-10T12:53:52Z",
+  "commit_sha": "9007025ddba8b41055b16cca7cdfb6962a13e3ca",
+  "updated_at": "2026-05-18T11:59:07Z",
   "produces": [
     {
       "groupId": "io.vidocq.chappe",
