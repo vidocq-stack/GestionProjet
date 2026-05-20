@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "vidocq/vidocq-mps",
   "branch": "main",
-  "commit_sha": "bbaa44aa0400717c430d75c5fdd736d66bf62c48",
-  "updated_at": "2026-05-14T09:09:41Z",
+  "commit_sha": "82174c8f1387805343304609d0426a5dfcf18d73",
+  "updated_at": "2026-05-20T22:05:25Z",
   "produces": [
     {
       "groupId": "io.vidocq.mpserver",
