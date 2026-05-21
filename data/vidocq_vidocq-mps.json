@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "vidocq/vidocq-mps",
   "branch": "main",
-  "commit_sha": "986f91f5fa70696584041e2efbcf11cd8d4cbd80",
-  "updated_at": "2026-05-21T07:59:20Z",
+  "commit_sha": "0d05f91e496cffbf05d3edb74695d3e3c5402784",
+  "updated_at": "2026-05-21T08:24:28Z",
   "produces": [
     {
       "groupId": "io.vidocq.mpserver",
@@ -48,6 +48,11 @@
     {
       "groupId": "io.vidocq.mpserver",
       "artifactId": "vidocq-mps-integration-tests",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.mpserver",
+      "artifactId": "vidocq-mps-it-humboldt-cassini",
       "version": ""
     },
     {
@@ -215,6 +220,13 @@
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-runtime",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.humboldt",
+      "artifactId": "humboldt-sdk-trace",
       "version": "0.1.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
