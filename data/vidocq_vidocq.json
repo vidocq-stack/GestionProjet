@@ -2,22 +2,12 @@
   "schema_version": 1,
   "repo": "vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "fbc4b82a535522971bee7f36237f6780acb0561f",
-  "updated_at": "2026-05-22T18:49:22Z",
+  "commit_sha": "0d05f91e496cffbf05d3edb74695d3e3c5402784",
+  "updated_at": "2026-05-21T08:24:28Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-arquillian",
-      "version": ""
-    },
-    {
-      "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-cassini-rest-example",
-      "version": ""
-    },
-    {
-      "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-cassini-rest-extension",
       "version": ""
     },
     {
@@ -62,12 +52,12 @@
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-it-cassini-rest",
+      "artifactId": "vidocq-runtime-it-humboldt-cassini",
       "version": ""
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-it-humboldt-cassini",
+      "artifactId": "vidocq-runtime-it-cassini-rest",
       "version": ""
     },
     {
@@ -104,6 +94,16 @@
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-parent",
       "version": "0.1.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.runtime",
+      "artifactId": "vidocq-runtime-cassini-rest-extension",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.runtime",
+      "artifactId": "vidocq-runtime-cassini-rest-example",
+      "version": ""
     },
     {
       "groupId": "io.vidocq.runtime",

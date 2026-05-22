@@ -4,7 +4,7 @@ Ce guide décrit la procédure complète pour intégrer un **nouveau sous-projet
 producteur** dans l'écosystème Vidocq (ex. : `cyrano`, `knock`, futurs). Il
 couvre les conventions de structure du repo, les fichiers méta obligatoires
 (dont les fichiers Claude / agents / skills), la wiring Maven côté
-`vidocq/vidocq-mps`, et l'enregistrement dans le graphe `GestionProjet`.
+`vidocq/vidocq`, et l'enregistrement dans le graphe `GestionProjet`.
 
 > **Public visé** : mainteneurs Vidocq, agents IA qui doivent bootstrap un nouveau
 > module sans surprise. Référencé par l'agent `claude` et le skill `init`.
@@ -174,10 +174,10 @@ ce qui ne sert pas (un projet sans TCK n'a pas besoin de `tck-runner`).
 
 ---
 
-## 3. Wiring côté `vidocq/vidocq-mps`
+## 3. Wiring côté `vidocq/vidocq`
 
-L'orchestrateur `vidocq-mps` consomme le sous-projet via un wrapper
-d'extension. Quatre points à modifier dans `vidocq/vidocq-mps/` :
+L'orchestrateur `vidocq` consomme le sous-projet via un wrapper
+d'extension. Quatre points à modifier dans `vidocq/vidocq/` :
 
 ### 3.1 Property dans le parent POM (`vidocq/pom.xml`)
 
@@ -209,34 +209,34 @@ indexer + classloader-spi sont tous explicités) :
 
 <!-- PUIS l'extension wrapper Vidocq elle-même : -->
 <dependency>
-    <groupId>io.vidocq.mpserver</groupId>
-    <artifactId>vidocq-mps-<nom-court>-extension</artifactId>
+    <groupId>io.vidocq.runtime</groupId>
+    <artifactId>vidocq-runtime-<nom-court>-extension</artifactId>
     <version>${project.version}</version>
 </dependency>
 ```
 
 > ⚠️ **Anti-pattern repéré sur la PR `add-cyrano`** : seul
-> `vidocq-mps-cyrano-extension` est dans le dependencyManagement, les artefacts
+> `vidocq-runtime-cyrano-extension` est dans le dependencyManagement, les artefacts
 > cyrano-api/core/cdi-vauban sont consommés directement via `${cyrano.version}`
 > dans le pom de l'extension. Ça marche, mais c'est incohérent avec le pattern
 > Vauban (qui liste *tous* ses artefacts). Pour rester homogène, ajouter
 > systématiquement chaque artefact upstream dans le dependencyManagement.
 
-### 3.3 Création du module wrapper `vidocq-mps-<nom-court>-extension`
+### 3.3 Création du module wrapper `vidocq-runtime-<nom-court>-extension`
 
-Sous `vidocq-mps-core-extensions/vidocq-mps-<nom-court>-extension/`, un POM
+Sous `vidocq-runtime-core-extensions/vidocq-runtime-<nom-court>-extension/`, un POM
 Model 4.1.0 :
 
 ```xml
 <project xmlns="http://maven.apache.org/POM/4.1.0" …>
     <modelVersion>4.1.0</modelVersion>
     <parent>
-        <groupId>io.vidocq.mpserver</groupId>
-        <artifactId>vidocq-mps-core-extensions</artifactId>
+        <groupId>io.vidocq.runtime</groupId>
+        <artifactId>vidocq-runtime-core-extensions</artifactId>
     </parent>
-    <artifactId>vidocq-mps-<nom-court>-extension</artifactId>
+    <artifactId>vidocq-runtime-<nom-court>-extension</artifactId>
     <name>Vidocq :: Core Extensions :: <Description>></name>
-    <description>Wrapper Maven/JPMS qui active <Nom-Court> dans un déploiement vidocq-mps.</description>
+    <description>Wrapper Maven/JPMS qui active <Nom-Court> dans un déploiement vidocq.</description>
 
     <dependencies>
         <dependency>
@@ -249,14 +249,14 @@ Model 4.1.0 :
 ```
 
 Ajouter au moins une classe wrapper + un `module-info.java` qui ré-exporte
-ou déclare `provides ServiceLoader …` selon la SPI vidocq-mps.
+ou déclare `provides ServiceLoader …` selon la SPI vidocq.
 
-### 3.4 Enregistrement dans `vidocq-mps-core-extensions/pom.xml`
+### 3.4 Enregistrement dans `vidocq-runtime-core-extensions/pom.xml`
 
 ```xml
 <subprojects>
     …
-    <subproject>vidocq-mps-<nom-court>-extension</subproject>
+    <subproject>vidocq-runtime-<nom-court>-extension</subproject>
     …
 </subprojects>
 ```
@@ -271,9 +271,9 @@ artefact `0.1.0-SNAPSHOT` n'existe pas dans `repo.vidocq.dev/snapshots` et
 `Could not resolve dependencies for io.vidocq.<nom-court>:…`.
 
 > 💡 C'est précisément la cause du fail de la PR `add-cyrano` dans
-> `vidocq/vidocq-mps` en mai 2026 : `cyrano/.forgejo/workflows/` n'existe pas
+> `vidocq/vidocq` en mai 2026 : `cyrano/.forgejo/workflows/` n'existe pas
 > encore au moment où on ouvre la PR consommatrice. Bootstrap les workflows
-> producteur AVANT d'ouvrir la PR vidocq-mps.
+> producteur AVANT d'ouvrir la PR vidocq.
 
 ### 4.1 `.forgejo/workflows/ci.yml`
 
@@ -368,7 +368,7 @@ Le fichier doit valider contre `data/schema.json` :
 
 ## 8. Checklist d'intégration (TL;DR)
 
-À cocher avant d'ouvrir la PR consommatrice dans `vidocq/vidocq-mps` :
+À cocher avant d'ouvrir la PR consommatrice dans `vidocq/vidocq` :
 
 ### Côté nouveau repo producteur
 - [ ] `pom.xml` root Model 4.1.0, `root="true"`, groupId `io.vidocq.<nom>`
@@ -383,11 +383,11 @@ Le fichier doit valider contre `data/schema.json` :
 - [ ] **`0.1.0-SNAPSHOT` publié dans `repo.vidocq.dev/snapshots`** (sinon les
       PR aval planteront)
 
-### Côté `vidocq/vidocq-mps`
+### Côté `vidocq/vidocq`
 - [ ] Property `<<nom>.version>` ajoutée au parent POM
 - [ ] Artefacts upstream listés dans `<dependencyManagement>` du parent
-- [ ] Wrapper `vidocq-mps-<nom>-extension` créé sous `vidocq-mps-core-extensions/`
-- [ ] Wrapper listé dans `<subprojects>` de `vidocq-mps-core-extensions/pom.xml`
+- [ ] Wrapper `vidocq-runtime-<nom>-extension` créé sous `vidocq-runtime-core-extensions/`
+- [ ] Wrapper listé dans `<subprojects>` de `vidocq-runtime-core-extensions/pom.xml`
 - [ ] Wrapper référencé dans `<dependencyManagement>` du parent
 - [ ] Test de non-régression `M5` (ServiceLoader + JPMS provides)
 
