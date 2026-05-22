@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "vidocq/knock",
   "branch": "main",
-  "commit_sha": "42200a1081da8a1922c5a6d750fc5f210904df09",
-  "updated_at": "2026-05-10T17:24:55Z",
+  "commit_sha": "4ddddb9a70c9224f5f9b280d106465de5bec4711",
+  "updated_at": "2026-05-22T22:06:39Z",
   "produces": [
     {
       "groupId": "io.vidocq.knock",
@@ -23,6 +23,11 @@
     {
       "groupId": "io.vidocq.knock",
       "artifactId": "knock-core",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.knock",
+      "artifactId": "knock-mp-health-api",
       "version": ""
     },
     {
