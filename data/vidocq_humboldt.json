@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "vidocq/humboldt",
   "branch": "main",
-  "commit_sha": "318b802b58756415f3b654124480458804695f1c",
-  "updated_at": "2026-05-21T15:34:01Z",
+  "commit_sha": "bf00366f4de412414bfb8839abb0903e1b1285e8",
+  "updated_at": "2026-05-23T07:25:14Z",
   "produces": [
     {
       "groupId": "io.vidocq.humboldt",
@@ -23,6 +23,21 @@
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-exporter-otlp-http",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.humboldt",
+      "artifactId": "humboldt-otel-api",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.humboldt",
+      "artifactId": "humboldt-otel-context",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.humboldt",
+      "artifactId": "humboldt-otel-instrumentation-annotations",
       "version": ""
     },
     {
