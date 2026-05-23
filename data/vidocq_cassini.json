@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "vidocq/cassini",
   "branch": "main",
-  "commit_sha": "24d27128b30a0ef2debefc56edbbd44b38973ad7",
-  "updated_at": "2026-05-22T18:50:14Z",
+  "commit_sha": "45e2f073d405d0dc35c1fd4bc8de64959f26ecc8",
+  "updated_at": "2026-05-23T21:23:53Z",
   "produces": [
     {
       "groupId": "io.vidocq.cassini",
@@ -18,6 +18,11 @@
     {
       "groupId": "io.vidocq.cassini",
       "artifactId": "cassini-chappe",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-client",
       "version": ""
     },
     {
