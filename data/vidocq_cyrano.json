@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "vidocq/cyrano",
   "branch": "main",
-  "commit_sha": "8575f9147e59d7249444fafc7a7db1324fb3718f",
-  "updated_at": "2026-05-22T18:50:39Z",
+  "commit_sha": "b24a6b2a6ee35b1b0340bf95426908811950e5cc",
+  "updated_at": "2026-05-24T03:43:29Z",
   "produces": [
     {
       "groupId": "io.vidocq.cyrano",
@@ -18,6 +18,11 @@
     {
       "groupId": "io.vidocq.cyrano",
       "artifactId": "cyrano-core",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.cyrano",
+      "artifactId": "cyrano-mp-rest-client-api",
       "version": ""
     },
     {
