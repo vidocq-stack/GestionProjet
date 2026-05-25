@@ -27,6 +27,10 @@
       ],
       "produced_by": "vidocq/cassini"
     },
+    "io.vidocq.cassini:cassini-client": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cassini"
+    },
     "io.vidocq.cassini:cassini-core": {
       "consumed_by": [
         {
@@ -269,6 +273,10 @@
       ],
       "produced_by": "vidocq/cyrano"
     },
+    "io.vidocq.cyrano:cyrano-mp-rest-client-api": {
+      "consumed_by": [],
+      "produced_by": "vidocq/cyrano"
+    },
     "io.vidocq.cyrano:cyrano-parent": {
       "consumed_by": [],
       "produced_by": "vidocq/cyrano"
@@ -311,6 +319,18 @@
       "produced_by": "vidocq/humboldt"
     },
     "io.vidocq.humboldt:humboldt-exporter-otlp-http": {
+      "consumed_by": [],
+      "produced_by": "vidocq/humboldt"
+    },
+    "io.vidocq.humboldt:humboldt-otel-api": {
+      "consumed_by": [],
+      "produced_by": "vidocq/humboldt"
+    },
+    "io.vidocq.humboldt:humboldt-otel-context": {
+      "consumed_by": [],
+      "produced_by": "vidocq/humboldt"
+    },
+    "io.vidocq.humboldt:humboldt-otel-instrumentation-annotations": {
       "consumed_by": [],
       "produced_by": "vidocq/humboldt"
     },
@@ -384,6 +404,10 @@
       "produced_by": "vidocq/knock"
     },
     "io.vidocq.knock:knock-core": {
+      "consumed_by": [],
+      "produced_by": "vidocq/knock"
+    },
+    "io.vidocq.knock:knock-mp-health-api": {
       "consumed_by": [],
       "produced_by": "vidocq/knock"
     },
@@ -812,6 +836,6 @@
       "produced_by": "vidocq/vauban"
     }
   },
-  "generated_at": "2026-05-22T18:53:10Z",
+  "generated_at": "2026-05-25T08:53:34Z",
   "schema_version": 1
 }
