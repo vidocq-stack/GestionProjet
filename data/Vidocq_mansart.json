@@ -2,113 +2,113 @@
   "schema_version": 1,
   "repo": "Vidocq/mansart",
   "branch": "main",
-  "commit_sha": "fdc262ded87afe817c8a4214a8df01603229af41",
-  "updated_at": "2026-05-25T16:30:39Z",
+  "commit_sha": "e323fac8df5063cd9b31836b53c8a952d33444fb",
+  "updated_at": "2026-05-25T19:07:10Z",
   "produces": [
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-cdi",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-core",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-dialect-h2",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-dialect-postgresql",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-dialect-spi",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-dialects",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-processor",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-tests",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-jakarta-data",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-pool",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-pool-api",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-pool-bench",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-pool-core",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-pool-tests",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-transactions",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-transactions-api",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-transactions-cdi",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-transactions-core",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-transactions-jdbc",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-transactions-tests",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-workspace",
-      "version": "1.0.0-SNAPSHOT"
+      "version": "0.1.0-SNAPSHOT"
     }
   ],
   "consumes": [
