@@ -75,7 +75,9 @@ def load_data_files(data_dir: Path) -> list[dict]:
             )
             continue
         repo = payload.get("repo")
-        if not isinstance(repo, str) or not repo.startswith(ALLOWED_OWNER_PREFIX):
+        # Case-insensitive: the owner was migrated vidocq/* -> Vidocq/* on Codeberg,
+        # so accept either casing rather than silently dropping every repo.
+        if not isinstance(repo, str) or not repo.lower().startswith(ALLOWED_OWNER_PREFIX):
             logger.warning(
                 "%s : repo hors whitelist `vidocq/*` ignoré (%r)",
                 path.name, repo,
