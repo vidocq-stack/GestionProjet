@@ -31,8 +31,8 @@ def validate_payload(path: Path) -> list[str]:
     repo = d.get("repo")
     if not isinstance(repo, str) or not REPO_PATTERN.match(repo):
         errs.append(f"repo invalide : {repo!r}")
-    elif not repo.startswith("vidocq/"):
-        errs.append(f"repo hors whitelist `vidocq/*` : {repo}")
+    elif not repo.lower().startswith("vidocq/"):
+        errs.append(f"repo hors whitelist `Vidocq/*` (org Codeberg) : {repo}")
 
     for field in ("branch", "commit_sha"):
         v = d.get(field)
