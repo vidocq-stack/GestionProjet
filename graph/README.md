@@ -58,5 +58,13 @@ Sortie :
 {"include": [{"repo": "vidocq/cassini"}, {"repo": "vidocq/foy"}, {"repo": "vidocq/mansart"}, {"repo": "vidocq/vidocq"}]}
 ```
 
-Cette matrice se branche directement sur un job `strategy.matrix` Forgejo Actions
-pour déclencher le build des consommateurs (cf. `workflow-templates/trigger-downstream.yml`).
+Ajouter `--ordered` pour trier la matrice en ordre topologique (producteur avant
+consommateur), requis par le rebuild séquentiel de `ci/build-impacted` :
+
+```json
+{"include": [{"repo": "vidocq/cassini"}, {"repo": "vidocq/foy"}, {"repo": "vidocq/mansart"}, {"repo": "Vidocq/vidocq"}]}
+```
+
+Cette liste est consommée par l'action `ci/build-impacted` (job `pr-validate`)
+qui reclone et rebuild chaque consommateur dans l'ordre, contre les artefacts PR
+du `~/.m2` local du runner.

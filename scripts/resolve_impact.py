@@ -13,6 +13,7 @@ on regarde les artefacts qu'il *produit* lui-même, et on enchaîne sur leurs co
 from __future__ import annotations
 
 import argparse
+import heapq
 import json
 import logging
 import sys
@@ -53,6 +54,11 @@ def parse_args() -> argparse.Namespace:
         choices=["json", "matrix"],
         default="json",
         help="Format de sortie : json (par défaut) ou matrix (Forgejo Actions)",
+    )
+    p.add_argument(
+        "--ordered", action="store_true",
+        help="Trie les impactés en ordre topologique (producteur avant consommateur). "
+             "Requis pour un rebuild transitif séquentiel.",
     )
     p.add_argument(
         "--verbose", action="store_true",
@@ -121,6 +127,58 @@ def resolve_impact(graph: dict, changed: list[str], max_depth: int | None) -> li
     return sorted(impacted)
 
 
+def topological_order(graph: dict, repos: list[str]) -> list[str]:
+    """Trie `repos` en ordre topologique : un producteur précède ses consommateurs.
+
+    Arête X -> Y si Y consomme un artefact produit par X (X, Y ∈ repos). Le tri
+    suit Kahn ; les nœuds prêts sont dépilés par ordre alphabétique pour un
+    résultat déterministe. En cas de cycle, les repos restants sont ajoutés triés
+    alphabétiquement (avec un warning) plutôt que de planter — le rebuild reste
+    alors best-effort sur la portion cyclique.
+    """
+    artifacts_index = graph.get("artifacts", {})
+    by_repo = repo_to_artifacts(graph)
+    repos_set = set(repos)
+
+    succ: dict[str, set[str]] = {r: set() for r in repos_set}
+    indeg: dict[str, int] = {r: 0 for r in repos_set}
+    for prod_repo in repos_set:
+        for art in by_repo.get(prod_repo, []):
+            for c in artifacts_index.get(art, {}).get("consumed_by", []):
+                cons = c["repo"]
+                if cons in repos_set and cons != prod_repo and cons not in succ[prod_repo]:
+                    succ[prod_repo].add(cons)
+                    indeg[cons] += 1
+
+    ready = [r for r in repos_set if indeg[r] == 0]
+    heapq.heapify(ready)
+    order: list[str] = []
+    while ready:
+        r = heapq.heappop(ready)
+        order.append(r)
+        for s in sorted(succ[r]):
+            indeg[s] -= 1
+            if indeg[s] == 0:
+                heapq.heappush(ready, s)
+
+    if len(order) < len(repos_set):
+        remaining = sorted(repos_set - set(order))
+        logger.warning(
+            "Cycle dans le sous-graphe impacté : ordre topologique partiel, "
+            "repos restants ajoutés triés alphabétiquement : %s",
+            remaining,
+        )
+        order.extend(remaining)
+    return order
+
+
+def resolve_impact_ordered(
+    graph: dict, changed: list[str], max_depth: int | None
+) -> list[str]:
+    """Comme resolve_impact, mais retourne les impactés en ordre topologique."""
+    return topological_order(graph, resolve_impact(graph, changed, max_depth))
+
+
 def main() -> int:
     args = parse_args()
     setup_logging(args.verbose)
@@ -143,6 +201,8 @@ def main() -> int:
             return 2
 
     impacted = resolve_impact(graph, args.changed, max_depth)
+    if args.ordered:
+        impacted = topological_order(graph, impacted)
 
     if args.format == "matrix":
         out = {"include": [{"repo": r} for r in impacted]}

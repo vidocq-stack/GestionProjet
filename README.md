@@ -6,11 +6,13 @@ suite Vidocq. Il sert deux objectifs :
 1. **Découverte automatique** des consommateurs (directs *et transitifs*) d'un
    artefact donné, pour qu'une PR sur Vauban (par exemple) puisse revalider
    automatiquement Cassini, Foy, Mansart, Vidocq, etc.
-2. **Source unique** pour la matrice de jobs `trigger-downstream` des CI Forgejo
-   — plus de liste statique en dur, plus de désynchronisation.
+2. **Source unique** pour le job `pr-validate` des CI Forgejo (action
+   `ci/build-impacted`) — plus de liste statique en dur, plus de désynchronisation.
 
-Les artefacts de PR sont publiés dans le dépôt Maven `pr-staging` (Reposilite),
-distinct du dépôt `snapshots` réservé aux builds de `main`.
+La validation de PR se fait dans un **seul job** : le producteur est buildé puis
+`install`é en version PR (release-style, sans `-SNAPSHOT`) dans le `~/.m2` du
+runner, et chaque consommateur impacté est recloné et rebuildé contre ces
+artefacts locaux, en ordre topologique. Aucun registry de staging n'est requis.
 
 ## Périmètre
 
@@ -41,8 +43,7 @@ GestionProjet/
 │   └── build-graph.yml          Reconstruit `graph/inverted.json` sur push `data/**`.
 ├── workflow-templates/
 │   ├── update-dep-graph.yml     À copier dans chaque repo (maintien du graphe).
-│   ├── pr-producer.yml          Référence — à fusionner dans le ci.yml producteur.
-│   └── upstream-pr-consumer.yml À copier dans chaque consommateur (réception dispatch).
+│   └── pr-producer.yml          À copier dans .forgejo/workflows/pr.yml (job pr-validate).
 ├── Makefile                     Cibles locales (graph, impact, test, validate).
 └── README.md                    Ce fichier.
 ```
@@ -86,9 +87,9 @@ Voir [`graph/README.md`](graph/README.md).
    `data/<owner>_<repo>.json`.
 
 Si le repo est *aussi* producteur, copier en plus
-[`workflow-templates/trigger-downstream.yml`](workflow-templates/trigger-downstream.yml)
-dans son workflow CI principal (jobs `discover-impact`, `trigger-downstream`,
-`verify-downstream`).
+[`workflow-templates/pr-producer.yml`](workflow-templates/pr-producer.yml)
+dans `.forgejo/workflows/pr.yml` (job unique `pr-validate` : build du producteur
+puis `ci/build-impacted` qui rebuild les consommateurs en local).
 
 ## Debugger localement
 
@@ -112,35 +113,35 @@ make graph
 
 ## Flux complet : PR producteur → revalidation des consommateurs
 
+Tout se déroule dans le **seul** job `pr-validate` du repo producteur. Chaque
+niveau `install`é en local devient disponible pour le suivant : un consommateur
+transitif (ex. `vidocq`) résout ses dépendances amont rebuildées (`cassini`,
+`chappe`, …) depuis le `~/.m2` du runner, jamais depuis le réseau.
+
 ```
                                            ┌──────────────────────────┐
-                                           │ vidocq/GestionProjet     │
+                                           │ Vidocq/GestionProjet     │
                                            │  graph/inverted.json     │
+                                           │  scripts/resolve_impact  │
                                            └─────────┬────────────────┘
-                                                     │ (1) GET via curl
+                                                     │ curl (--ordered)
                                                      ▼
-┌─────────────────┐  PR ouverte  ┌──────────────────────────────────────────┐
-│ vidocq/vauban   │─────────────▶│ vauban CI                                │
-│ pom.xml         │              │  build (publie en pr-staging)            │
-└─────────────────┘              │  discover-impact (résout le graphe)     ─┼─▶ matrix={cassini, foy, mansart, vidocq}
-                                 │  trigger-downstream                      │   (fermeture transitive)
-                                 │   POST /api/v1/repos/<x>/dispatches      │
-                                 │  verify-downstream                       │
-                                 │   poll /commits/<sha>/statuses           │
-                                 └──────────────────┬───────────────────────┘
-                                                    │
-                              ┌─────────────────────┼─────────────────────┐
-                              ▼                     ▼                     ▼
-                  ┌────────────────────┐  ┌───────────────────┐  ┌────────────────────┐
-                  │ vidocq/cassini CI  │  │ vidocq/foy CI     │  │ vidocq/vidocq CI   │
-                  │ build avec         │  │ build avec        │  │ build avec         │
-                  │ vauban-pr-version  │  │ vauban-pr-version │  │ vauban-pr-version  │
-                  │ poste status sur   │  │ poste status sur  │  │ poste status sur   │
-                  │ vauban PR sha      │  │ vauban PR sha     │  │ vauban PR sha      │
-                  └────────────────────┘  └───────────────────┘  └────────────────────┘
-                                                    │
+┌─────────────────┐  PR ouverte  ┌──────────────────────────────────────────────┐
+│ Vidocq/vauban   │─────────────▶│ vauban CI · job pr-validate (1 seul runner)    │
+│ pom.xml         │              │  1. versions:set <base>-PR<n>.<sha8> (release) │
+└─────────────────┘              │  2. mvn install            → ~/.m2 local       │
+                                 │  3. ci/build-impacted :                        │
+                                 │     resolve_impact --ordered                   │
+                                 │       → [cassini, foy, …, vidocq] (topo)        │
+                                 │     pour chaque consommateur, dans l'ordre :    │
+                                 │       git clone (branche par défaut)            │
+                                 │       versions:set-property <up>.version=<PR>   │
+                                 │       versions:set <base>-PR<n>.<sha8>          │
+                                 │       mvn install          → ~/.m2 local       │
+                                 └──────────────────┬─────────────────────────────┘
+                                                    │ tout vert ?
                                                     ▼
-                                  Required check OK sur la PR vauban
+                              Required check `pr-validate` OK sur la PR vauban
 ```
 
 ## Mise à jour du graphe : flux côté consommateur
@@ -173,8 +174,7 @@ Un seul PAT, **`VIDOCQ_BOT_TOKEN`** au niveau organisation Forgejo, avec :
 - **Write** sur `vidocq/GestionProjet` (pour `update_data_file.sh` et
   `build-graph.yml`).
 - **Read** sur tous les autres repos `vidocq/*` (pour récupérer scripts/graph
-  via `curl`).
-- **Dispatch** sur les repos consommateurs (pour `trigger-downstream`).
+  via `curl` **et cloner les consommateurs** dans `ci/build-impacted`).
 
-Le token est partagé entre tous les jobs (graph, dispatch, verify) volontairement
-— pas de séparation des rôles dans cette première version.
+Le token est partagé entre tous les jobs (graph, clone) volontairement — pas de
+séparation des rôles dans cette première version.

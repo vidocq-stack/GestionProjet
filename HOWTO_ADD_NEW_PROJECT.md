@@ -20,8 +20,8 @@ couvre les conventions de structure du repo, les fichiers méta obligatoires
   stricte côté GestionProjet.
 - **Nom de la property Maven** dans les consommateurs : `<nom-court>.version`
   (ex. `<cyrano.version>`). Cette property porte le même nom que le repo court
-  — sans quoi le workflow `upstream-pr.yml` côté consommateur ne peut pas
-  résoudre la version automatiquement (cf. `workflow-templates/upstream-pr-consumer.yml`).
+  — sans quoi `ci/build-impacted` ne peut pas réécrire la version PR de la dép
+  amont (`versions:set-property <nom-court>.version=<PR>`) lors d'une PR amont.
 - **Version initiale** : `0.1.0-SNAPSHOT` par défaut (Mansart est l'exception
   historique à `1.0.0-SNAPSHOT`).
 - **Java / Maven** : Java 25 Temurin + Maven 4.0.0-rc-5, pinés via `.sdkmanrc`.
@@ -54,9 +54,8 @@ Arborescence minimale attendue (s'inspirer de `vauban/`, `chappe/`, `cyrano/`) :
 │   └── skills/                ← skills (/log-bug, /log-bench)
 └── .forgejo/workflows/        ← CI/CD (cf. §4)
     ├── ci.yml                 ← build + deploy snapshots sur push main
-    ├── pr.yml                 ← validation PR + publication pr-staging
-    ├── update-dep-graph.yml   ← maintenance GestionProjet
-    └── upstream-pr.yml        ← réception dispatch consommateurs (si consommateur)
+    ├── pr.yml                 ← validation PR en 1 job (build local + ci/build-impacted)
+    └── update-dep-graph.yml   ← maintenance GestionProjet
 ```
 
 ### 1.1 Root POM (Model 4.1.0)
@@ -266,9 +265,10 @@ ou déclare `provides ServiceLoader …` selon la SPI vidocq.
 ## 4. Workflows Forgejo CI/CD
 
 C'est l'étape **la plus importante côté nouveau producteur** — sans elle, son
-artefact `0.1.0-SNAPSHOT` n'existe pas dans `repo.vidocq.dev/snapshots` et
-**toutes les PR consommatrices vont planter** avec
-`Could not resolve dependencies for io.vidocq.<nom-court>:…`.
+artefact `0.1.0-SNAPSHOT` n'est pas publié sur `central-snapshots` et **toutes
+les PR consommatrices vont planter** avec
+`Could not resolve dependencies for io.vidocq.<nom-court>:…` (le job PR d'un
+consommateur résout ses dépendances amont non modifiées depuis `central-snapshots`).
 
 > 💡 C'est précisément la cause du fail de la PR `add-cyrano` dans
 > `vidocq/vidocq` en mai 2026 : `cyrano/.forgejo/workflows/` n'existe pas
@@ -277,24 +277,28 @@ artefact `0.1.0-SNAPSHOT` n'existe pas dans `repo.vidocq.dev/snapshots` et
 
 ### 4.1 `.forgejo/workflows/ci.yml`
 
-Build + deploy snapshots sur push `main`. S'inspirer d'un repo existant
-(cassini/vauban). Doit utiliser :
-- `setup-java@v4` (Java 25 Temurin)
-- Téléchargement manuel de Maven 4.0.0-rc-5 (pas d'image officielle)
-- Authentification snapshots via secret organisation `MAVEN_DEPLOY_TOKEN`
-- `mvn -B -ntp deploy` à la fin
+Build + TCK + deploy sur push `main`. S'inspirer d'un repo existant
+(cassini/vauban) — tout passe par les composite actions du repo `Vidocq/ci` :
+- `Vidocq/ci/setup-maven@v1` — Java 25 Temurin + Maven 4.0.0-rc-5 + `settings.xml`
+  (résolution des SNAPSHOT depuis `central-snapshots`)
+- `Vidocq/ci/run-tck@v1` — TCK officiel (si applicable)
+- `Vidocq/ci/deploy-maven@v1` — publie sur Maven Central (SNAPSHOT via
+  `maven-deploy-plugin` → `central-snapshots` ; RELEASE via `central-publishing`).
+  Secrets : `CENTRAL_USERNAME`, `CENTRAL_PASSWORD`, `GPG_PRIVATE_KEY`, `GPG_PASSPHRASE`.
+- `Vidocq/ci/notify-slack@v1` — notification
 
 ### 4.2 `.forgejo/workflows/pr.yml`
 
-Fusion des 4 jobs du template
-[`workflow-templates/pr-producer.yml`](workflow-templates/pr-producer.yml) :
-`build-pr`, `discover-impact`, `trigger-downstream`, `verify-downstream`.
+Copier tel quel le template
+[`workflow-templates/pr-producer.yml`](workflow-templates/pr-producer.yml) : un
+**seul** job `pr-validate`.
 
-- Publie en **pr-staging** (`https://repo.vidocq.dev/pr-staging`) avec une
-  version dérivée `<base>-PR<num>.<run>-SNAPSHOT`.
-- Découvre via GestionProjet quels repos consommateurs doivent être
-  revalidés.
-- Dispatch des `workflow_dispatch` vers leur `upstream-pr.yml`.
+- Build le producteur en version PR release-style `<base>-PR<num>.<sha8>` (sans
+  `-SNAPSHOT`) puis `mvn install` dans le `~/.m2` du runner — **rien n'est publié**.
+- L'action `Vidocq/ci/build-impacted@v1` découvre via GestionProjet les
+  consommateurs impactés (fermeture transitive, **ordre topologique**) et les
+  reclone/rebuild un à un contre les artefacts PR locaux.
+- Le succès de ce job unique est l'**unique required check** de la branch protection.
 
 ### 4.3 `.forgejo/workflows/update-dep-graph.yml`
 
@@ -304,13 +308,12 @@ Doit avoir accès au secret `VIDOCQ_BOT_TOKEN`. Lancer une fois manuellement en
 `workflow_dispatch` pour amorcer `data/vidocq_<nom-court>.json` dans
 GestionProjet.
 
-### 4.4 `.forgejo/workflows/upstream-pr.yml` (si consommateur)
+### 4.4 Aucun workflow consommateur dédié
 
-Si le nouveau projet **consomme** d'autres modules Vidocq (Vauban, Chappe…),
-copier
-[`workflow-templates/upstream-pr-consumer.yml`](workflow-templates/upstream-pr-consumer.yml)
-dans `.forgejo/workflows/upstream-pr.yml`. Pré-requis : chaque dép amont est
-référencée via une property `<nom-amont>.version` dans le pom.
+Le mécanisme `upstream-pr.yml` + dispatch est **supprimé** : `ci/build-impacted`
+reclone et rebuild les consommateurs directement dans le job du producteur. Un
+repo consommateur n'a donc **rien** à configurer côté réception — il suffit qu'il
+expose ses dépendances amont via des properties `<nom-amont>.version` (cf. §0).
 
 ---
 
@@ -376,12 +379,11 @@ Le fichier doit valider contre `data/schema.json` :
 - [ ] `BUG.md` et `BENCH.md` (au moins en stub)
 - [ ] `.claude/agents/` et `.claude/skills/` peuplés avec ce qui sert
 - [ ] `<nom>-tck/` en Model 4.0.0 standalone (si TCK) + script `run-official-tck-*.sh`
-- [ ] `.forgejo/workflows/ci.yml` qui deploy snapshots
-- [ ] `.forgejo/workflows/pr.yml` (4 jobs du template producteur)
+- [ ] `.forgejo/workflows/ci.yml` (setup-maven + deploy-maven sur push main)
+- [ ] `.forgejo/workflows/pr.yml` (job unique `pr-validate` du template producteur)
 - [ ] `.forgejo/workflows/update-dep-graph.yml` activé une fois
-- [ ] `.forgejo/workflows/upstream-pr.yml` (si consommateur amont)
-- [ ] **`0.1.0-SNAPSHOT` publié dans `repo.vidocq.dev/snapshots`** (sinon les
-      PR aval planteront)
+- [ ] **`0.1.0-SNAPSHOT` publié sur `central-snapshots`** (sinon les PR aval
+      planteront à la résolution des dépendances amont)
 
 ### Côté `vidocq/vidocq`
 - [ ] Property `<<nom>.version>` ajoutée au parent POM

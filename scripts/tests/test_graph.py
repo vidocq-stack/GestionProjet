@@ -143,6 +143,73 @@ class BuildGraphTests(unittest.TestCase):
             )
 
 
+class TopologicalOrderTests(unittest.TestCase):
+    """resolve_impact_ordered : les impactés triés producteur-avant-consommateur."""
+
+    def test_diamond_leaf_last(self):
+        # A -> B, A -> C, B -> D, C -> D : D (feuille) doit venir après B et C.
+        payloads = [
+            make_payload("vidocq/a", produces=[prod("io.vidocq.a", "core")]),
+            make_payload(
+                "vidocq/b",
+                produces=[prod("io.vidocq.b", "core")],
+                consumes=[art("io.vidocq.a", "core")],
+            ),
+            make_payload(
+                "vidocq/c",
+                produces=[prod("io.vidocq.c", "core")],
+                consumes=[art("io.vidocq.a", "core")],
+            ),
+            make_payload(
+                "vidocq/d",
+                consumes=[art("io.vidocq.b", "core"), art("io.vidocq.c", "core")],
+            ),
+        ]
+        graph = builder.build(payloads)
+        order = resolver.resolve_impact_ordered(graph, ["io.vidocq.a:core"], None)
+        self.assertEqual(set(order), {"vidocq/b", "vidocq/c", "vidocq/d"})
+        self.assertEqual(order[-1], "vidocq/d", f"D doit être dernier, ordre={order}")
+
+    def test_topo_differs_from_alpha(self):
+        # root -> z-lib -> a-app : l'ordre alpha [a-app, z-lib] est FAUX,
+        # le producteur z-lib doit précéder son consommateur a-app.
+        payloads = [
+            make_payload("vidocq/root", produces=[prod("io.vidocq.root", "core")]),
+            make_payload(
+                "vidocq/z-lib",
+                produces=[prod("io.vidocq.z", "core")],
+                consumes=[art("io.vidocq.root", "core")],
+            ),
+            make_payload(
+                "vidocq/a-app",
+                consumes=[art("io.vidocq.z", "core")],
+            ),
+        ]
+        graph = builder.build(payloads)
+        impacted = resolver.resolve_impact(graph, ["io.vidocq.root:core"], None)
+        self.assertEqual(impacted, ["vidocq/a-app", "vidocq/z-lib"])  # ordre alpha
+        order = resolver.resolve_impact_ordered(graph, ["io.vidocq.root:core"], None)
+        self.assertEqual(order, ["vidocq/z-lib", "vidocq/a-app"])  # ordre topo
+
+    def test_cycle_no_crash(self):
+        # A <-> B cyclique : pas de crash, les deux repos restent présents.
+        payloads = [
+            make_payload(
+                "vidocq/a",
+                produces=[prod("io.vidocq.a", "core")],
+                consumes=[art("io.vidocq.b", "core")],
+            ),
+            make_payload(
+                "vidocq/b",
+                produces=[prod("io.vidocq.b", "core")],
+                consumes=[art("io.vidocq.a", "core")],
+            ),
+        ]
+        graph = builder.build(payloads)
+        order = resolver.resolve_impact_ordered(graph, ["io.vidocq.a:core"], None)
+        self.assertEqual(set(order), {"vidocq/a", "vidocq/b"})
+
+
 class ResolveImpactCliTests(unittest.TestCase):
     def test_matrix_format(self):
         graph = builder.build(
