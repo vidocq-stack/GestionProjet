@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/cervantes",
   "branch": "main",
-  "commit_sha": "10d97340b76eaea3b81d9e8e0604a1bda44371a6",
-  "updated_at": "2026-05-26T16:37:12Z",
+  "commit_sha": "91368761ace673454c082cf316b1d8fd35314220",
+  "updated_at": "2026-05-27T21:00:47Z",
   "produces": [
     {
       "groupId": "io.vidocq.cervantes",
@@ -52,6 +52,13 @@
       "artifactId": "cassini-api",
       "version": "0.1.0-SNAPSHOT",
       "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-api",
+      "version": "",
+      "scope": "provided",
       "type": "jar"
     },
     {
