@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/cassini",
   "branch": "main",
-  "commit_sha": "ed1a0ba0ac4f58023e1b7b396831ef2aa462a9aa",
-  "updated_at": "2026-05-23T21:45:27Z",
+  "commit_sha": "593f515a6a41c742b7cc97413327123abfda3089",
+  "updated_at": "2026-05-27T14:34:59Z",
   "produces": [
     {
       "groupId": "io.vidocq.cassini",
@@ -57,8 +57,18 @@
     },
     {
       "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-maven-plugin",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.cassini",
       "artifactId": "cassini-parent",
       "version": "0.1.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-processor",
+      "version": ""
     }
   ],
   "consumes": [
