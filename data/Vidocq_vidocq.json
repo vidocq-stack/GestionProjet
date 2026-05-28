@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "b87a750fa55a0191e93d8867f8614271730266c4",
-  "updated_at": "2026-05-28T12:40:00Z",
+  "commit_sha": "260a05b0b204223a6ba056088d427d0ac5703b1b",
+  "updated_at": "2026-05-28T14:12:06Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
@@ -22,6 +22,11 @@
     },
     {
       "groupId": "io.vidocq.runtime",
+      "artifactId": "vidocq-runtime-cassini-rest-extension-codegen",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-cervantes-jwt-extension",
       "version": ""
     },
@@ -33,6 +38,11 @@
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-core",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.runtime",
+      "artifactId": "vidocq-runtime-core-codegen",
       "version": ""
     },
     {
@@ -92,6 +102,11 @@
     },
     {
       "groupId": "io.vidocq.runtime",
+      "artifactId": "vidocq-runtime-mansart-data-extension-codegen",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-mansart-h2-example",
       "version": ""
     },
@@ -103,6 +118,11 @@
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-mansart-transactions-extension",
+      "version": ""
+    },
+    {
+      "groupId": "io.vidocq.runtime",
+      "artifactId": "vidocq-runtime-mansart-transactions-extension-codegen",
       "version": ""
     },
     {
@@ -155,6 +175,13 @@
       "artifactId": "cassini-core",
       "version": "",
       "scope": "runtime",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-processor",
+      "version": "${cassini.version}",
+      "scope": "compile",
       "type": "jar"
     },
     {
@@ -315,6 +342,13 @@
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-processor",
       "version": "${mansart.version}",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-data-processor",
+      "version": "${mansart.version}",
       "scope": "provided",
       "type": "jar"
     },
@@ -398,6 +432,13 @@
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-maven-plugin",
+      "version": "${vauban.version}",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-processor",
       "version": "${vauban.version}",
       "scope": "compile",
       "type": "jar"
