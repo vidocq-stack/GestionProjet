@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vauban",
   "branch": "main",
-  "commit_sha": "d166c2823ff88f368f41d75e80e3bd5b842869cc",
-  "updated_at": "2026-05-29T18:14:17Z",
+  "commit_sha": "0add6c83dbf1e08755774a746a1a0c442b5940a4",
+  "updated_at": "2026-05-29T18:23:53Z",
   "produces": [
     {
       "groupId": "io.vidocq.vauban",
@@ -28,37 +28,37 @@
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-api",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-classloader-spi",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-core",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-examples",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-indexer",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-junit",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-maven-plugin",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
@@ -68,22 +68,22 @@
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-processor",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-sjar",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-tck-runner",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-test-suite",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     }
   ],
   "consumes": []
