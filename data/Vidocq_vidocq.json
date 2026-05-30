@@ -2,133 +2,133 @@
   "schema_version": 1,
   "repo": "Vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "05838a4738ec2bf33d149d00004ebf647c31f3bb",
-  "updated_at": "2026-05-28T18:13:59Z",
+  "commit_sha": "7c9d117fed52251e03dae6d3dd089cb6219edc94",
+  "updated_at": "2026-05-30T15:32:48Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-arquillian",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-cassini-rest-example",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-cassini-rest-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-cassini-rest-extension-codegen",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-cervantes-jwt-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-chappe-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-core",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-core-codegen",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-core-extensions",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-cyrano-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-examples",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-external-rest-lib",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-humboldt-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-integration-tests",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-it-cassini-rest",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-it-cervantes-jwt",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-it-humboldt-cassini",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-knock-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-mansart-data-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-mansart-data-extension-codegen",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-mansart-h2-example",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-mansart-pool-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-mansart-transactions-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-mansart-transactions-extension-codegen",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-maven-plugin",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
@@ -138,12 +138,12 @@
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-ravel-extension",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-spi",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     }
   ],
   "consumes": [
