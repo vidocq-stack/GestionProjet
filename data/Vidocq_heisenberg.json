@@ -2,38 +2,38 @@
   "schema_version": 1,
   "repo": "Vidocq/heisenberg",
   "branch": "main",
-  "commit_sha": "fa7c850470b38b9f416e3255714a6ef9f570b5ab",
-  "updated_at": "2026-05-26T06:35:21Z",
+  "commit_sha": "f0569e679b60a8f9d6b35087ffe6c0647315ef48",
+  "updated_at": "2026-05-30T15:30:16Z",
   "produces": [
     {
       "groupId": "io.vidocq.heisenberg",
       "artifactId": "heisenberg-api",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.heisenberg",
       "artifactId": "heisenberg-bench",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.heisenberg",
       "artifactId": "heisenberg-cdi-vauban",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.heisenberg",
       "artifactId": "heisenberg-core",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.heisenberg",
       "artifactId": "heisenberg-examples",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.heisenberg",
       "artifactId": "heisenberg-mp-ft-api",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.heisenberg",
