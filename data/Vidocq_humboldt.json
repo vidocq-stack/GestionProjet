@@ -2,43 +2,43 @@
   "schema_version": 1,
   "repo": "Vidocq/humboldt",
   "branch": "main",
-  "commit_sha": "8532867badc5477ce7f072190a71e0236e8ca689",
-  "updated_at": "2026-05-24T11:28:36Z",
+  "commit_sha": "80cc8b2881d33a37b96f99449a4d762df3656e0f",
+  "updated_at": "2026-05-30T15:32:58Z",
   "produces": [
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-api",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-cdi",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-context",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-exporter-otlp-http",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-otel-api",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-otel-context",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-otel-instrumentation-annotations",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
@@ -48,37 +48,37 @@
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-propagator-w3c",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-rest",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-runtime",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-sdk-common",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-sdk-log",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-sdk-metric",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-sdk-trace",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     }
   ],
   "consumes": []
