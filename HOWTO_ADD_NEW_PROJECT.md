@@ -24,7 +24,7 @@ couvre les conventions de structure du repo, les fichiers méta obligatoires
   amont (`versions:set-property <nom-court>.version=<PR>`) lors d'une PR amont.
 - **Version initiale** : `0.1.0-SNAPSHOT` par défaut (Mansart est l'exception
   historique à `1.0.0-SNAPSHOT`).
-- **Java / Maven** : Java 25 Temurin + Maven 4.0.0-rc-5, pinés via `.sdkmanrc`.
+- **Java / Maven** : Java 25 Temurin + Maven 3.9.16, pinés via `.sdkmanrc`.
 
 ---
 
@@ -34,7 +34,7 @@ Arborescence minimale attendue (s'inspirer de `vauban/`, `chappe/`, `cyrano/`) :
 
 ```
 <nom-court>/
-├── .sdkmanrc                  ← java=25-tem, maven=4.0.0-rc-5
+├── .sdkmanrc                  ← java=25-tem, maven=3.9.16
 ├── .gitignore                 ← target/, *.iml, .idea/, etc.
 ├── LICENSE                    ← Apache-2.0 (cohérence écosystème)
 ├── README.md                  ← vue produit : modules, prérequis, commandes
@@ -114,7 +114,7 @@ Model 4.1.0 — voir CLAUDE.md du workspace).
 
 ```
 java=25-tem
-maven=4.0.0-rc-5
+maven=3.9.16
 ```
 
 ### 2.2 `CLAUDE.md` (gabarit minimal)
@@ -279,7 +279,7 @@ consommateur résout ses dépendances amont non modifiées depuis `central-snaps
 
 Build + TCK + deploy sur push `main`. S'inspirer d'un repo existant
 (cassini/vauban) — tout passe par les composite actions du repo `Vidocq/ci` :
-- `Vidocq/ci/setup-maven@v1` — Java 25 Temurin + Maven 4.0.0-rc-5 + `settings.xml`
+- `Vidocq/ci/setup-maven@v1` — Java 25 Temurin + Maven 3.9.16 + `settings.xml`
   (résolution des SNAPSHOT depuis `central-snapshots`)
 - `Vidocq/ci/run-tck@v1` — TCK officiel (si applicable)
 - `Vidocq/ci/deploy-maven@v1` — publie sur Maven Central (SNAPSHOT via
