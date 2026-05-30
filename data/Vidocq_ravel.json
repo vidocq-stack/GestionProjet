@@ -2,33 +2,33 @@
   "schema_version": 1,
   "repo": "Vidocq/ravel",
   "branch": "main",
-  "commit_sha": "f170b223a7223b66647815f0335b7723b9ee9f82",
-  "updated_at": "2026-05-11T09:40:10Z",
+  "commit_sha": "091e34f195defa193cde17b49eca11e64976d2fb",
+  "updated_at": "2026-05-30T15:32:03Z",
   "produces": [
     {
       "groupId": "io.vidocq.ravel",
       "artifactId": "ravel-api",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.ravel",
       "artifactId": "ravel-bench",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.ravel",
       "artifactId": "ravel-cdi-vauban",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.ravel",
       "artifactId": "ravel-core",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.ravel",
       "artifactId": "ravel-mp-config-api",
-      "version": ""
+      "version": "0.1.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.ravel",
