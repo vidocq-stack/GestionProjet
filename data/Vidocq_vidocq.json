@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "7c9d117fed52251e03dae6d3dd089cb6219edc94",
-  "updated_at": "2026-05-30T15:32:48Z",
+  "commit_sha": "8efae7e5c0ae642aad4de0e826e51570d135264e",
+  "updated_at": "2026-05-31T18:43:00Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
@@ -234,14 +234,14 @@
     {
       "groupId": "io.vidocq.chappe",
       "artifactId": "chappe-api",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.chappe",
       "artifactId": "chappe-core",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
@@ -255,7 +255,7 @@
     {
       "groupId": "io.vidocq.chappe",
       "artifactId": "chappe-http",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
@@ -310,14 +310,14 @@
     },
     {
       "groupId": "io.vidocq.knock",
-      "artifactId": "knock-cassini",
+      "artifactId": "knock-cdi-vauban",
       "version": "${knock.version}",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.knock",
-      "artifactId": "knock-cdi-vauban",
+      "artifactId": "knock-jaxrs",
       "version": "${knock.version}",
       "scope": "compile",
       "type": "jar"
