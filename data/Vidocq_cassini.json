@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/cassini",
   "branch": "main",
-  "commit_sha": "394a2318a3f2a243078c67a06e6054a2b52bf1dc",
-  "updated_at": "2026-05-30T15:29:19Z",
+  "commit_sha": "3a74aa95f30550da208ef57c611f945001a415b0",
+  "updated_at": "2026-05-31T08:07:50Z",
   "produces": [
     {
       "groupId": "io.vidocq.cassini",
