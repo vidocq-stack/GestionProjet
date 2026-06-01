@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/cervantes",
   "branch": "main",
-  "commit_sha": "defb008b9ba056cb054d5ba9d5f37b47f8bea654",
-  "updated_at": "2026-05-30T15:29:21Z",
+  "commit_sha": "6bfbb8b3e2f7c909d441358eca457cbf4527f593",
+  "updated_at": "2026-06-01T10:40:52Z",
   "produces": [
     {
       "groupId": "io.vidocq.cervantes",
@@ -13,11 +13,6 @@
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-bench",
-      "version": "0.1.0-SNAPSHOT"
-    },
-    {
-      "groupId": "io.vidocq.cervantes",
-      "artifactId": "cervantes-cassini",
       "version": "0.1.0-SNAPSHOT"
     },
     {
@@ -33,6 +28,11 @@
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-examples",
+      "version": "0.1.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.cervantes",
+      "artifactId": "cervantes-jaxrs",
       "version": "0.1.0-SNAPSHOT"
     },
     {
@@ -151,6 +151,13 @@
       "version": "",
       "scope": "test",
       "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-maven-plugin",
+      "version": "${vauban.version}",
+      "scope": "build",
+      "type": "maven-plugin"
     }
   ]
 }
