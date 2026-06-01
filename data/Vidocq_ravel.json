@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/ravel",
   "branch": "main",
-  "commit_sha": "b098fafd2bbf02015b456e72fdcc0ae5354b2963",
-  "updated_at": "2026-05-31T11:21:29Z",
+  "commit_sha": "36105c650745c767cf366358910c0428c648a6bc",
+  "updated_at": "2026-06-01T10:34:35Z",
   "produces": [
     {
       "groupId": "io.vidocq.ravel",
@@ -50,6 +50,13 @@
       "version": "${vauban.version}",
       "scope": "test",
       "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-maven-plugin",
+      "version": "${vauban.version}",
+      "scope": "build",
+      "type": "maven-plugin"
     }
   ]
 }
