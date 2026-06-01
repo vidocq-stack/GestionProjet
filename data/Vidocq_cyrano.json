@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/cyrano",
   "branch": "main",
-  "commit_sha": "7fa678d25a2e69df2005edfc79934e5cdb23b011",
-  "updated_at": "2026-05-31T18:43:41Z",
+  "commit_sha": "1e0a0fc029f5799d41d060765e2fde3138a87383",
+  "updated_at": "2026-06-01T10:34:40Z",
   "produces": [
     {
       "groupId": "io.vidocq.cyrano",
@@ -87,6 +87,13 @@
       "version": "",
       "scope": "test",
       "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-maven-plugin",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "build",
+      "type": "maven-plugin"
     }
   ]
 }
