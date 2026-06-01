@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "02d88b50375ce0138c5490a8b61544709a9e5ff8",
-  "updated_at": "2026-06-01T10:41:16Z",
+  "commit_sha": "1a4982ca2704c2c6398d82f822687caf8137161b",
+  "updated_at": "2026-06-01T13:38:17Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
@@ -53,6 +53,11 @@
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-cyrano-extension",
+      "version": "0.1.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.runtime",
+      "artifactId": "vidocq-runtime-dirac-extension",
       "version": "0.1.0-SNAPSHOT"
     },
     {
@@ -277,6 +282,20 @@
       "groupId": "io.vidocq.cyrano",
       "artifactId": "cyrano-core",
       "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.dirac",
+      "artifactId": "dirac-cdi-vauban",
+      "version": "${dirac.version}",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.dirac",
+      "artifactId": "dirac-rest",
+      "version": "${dirac.version}",
       "scope": "compile",
       "type": "jar"
     },
