@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/heisenberg",
   "branch": "main",
-  "commit_sha": "16a7826c9f78de49f6711d6cd0fc1f1a45bbb292",
-  "updated_at": "2026-05-31T08:08:09Z",
+  "commit_sha": "e1132b12dc19e605433ba505f3b1cf41e4f79187",
+  "updated_at": "2026-06-01T10:34:43Z",
   "produces": [
     {
       "groupId": "io.vidocq.heisenberg",
@@ -104,6 +104,13 @@
       "version": "",
       "scope": "test",
       "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-maven-plugin",
+      "version": "${vauban.version}",
+      "scope": "build",
+      "type": "maven-plugin"
     }
   ]
 }
