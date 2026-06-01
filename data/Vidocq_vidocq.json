@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "8efae7e5c0ae642aad4de0e826e51570d135264e",
-  "updated_at": "2026-05-31T18:43:00Z",
+  "commit_sha": "02d88b50375ce0138c5490a8b61544709a9e5ff8",
+  "updated_at": "2026-06-01T10:41:16Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
@@ -198,13 +198,6 @@
     },
     {
       "groupId": "io.vidocq.cervantes",
-      "artifactId": "cervantes-cassini",
-      "version": "0.1.0-SNAPSHOT",
-      "scope": "compile",
-      "type": "jar"
-    },
-    {
-      "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-cdi-vauban",
       "version": "0.1.0-SNAPSHOT",
       "scope": "compile",
@@ -213,6 +206,13 @@
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-core",
+      "version": "0.1.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cervantes",
+      "artifactId": "cervantes-jaxrs",
       "version": "0.1.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
