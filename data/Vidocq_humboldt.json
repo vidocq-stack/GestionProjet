@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/humboldt",
   "branch": "main",
-  "commit_sha": "80cc8b2881d33a37b96f99449a4d762df3656e0f",
-  "updated_at": "2026-05-30T15:32:58Z",
+  "commit_sha": "c2c9380db22c80813f15444e10612a1a4440ed0c",
+  "updated_at": "2026-06-01T10:34:55Z",
   "produces": [
     {
       "groupId": "io.vidocq.humboldt",
@@ -81,5 +81,13 @@
       "version": "0.1.0-SNAPSHOT"
     }
   ],
-  "consumes": []
+  "consumes": [
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-maven-plugin",
+      "version": "${vauban.version}",
+      "scope": "build",
+      "type": "maven-plugin"
+    }
+  ]
 }
