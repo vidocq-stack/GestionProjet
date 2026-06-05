@@ -2,48 +2,48 @@
   "schema_version": 1,
   "repo": "Vidocq/cervantes",
   "branch": "main",
-  "commit_sha": "02feab262e8a01bbe4f5313d3e0609a035d2cc4d",
-  "updated_at": "2026-06-02T23:36:00Z",
+  "commit_sha": "8cae4327a76915532d06c32c8ec9a7c5af71a238",
+  "updated_at": "2026-06-05T10:07:28Z",
   "produces": [
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-api",
-      "version": "0.1.0-SNAPSHOT"
+      "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-bench",
-      "version": "0.1.0-SNAPSHOT"
+      "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-cdi-vauban",
-      "version": "0.1.0-SNAPSHOT"
+      "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-core",
-      "version": "0.1.0-SNAPSHOT"
+      "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-examples",
-      "version": "0.1.0-SNAPSHOT"
+      "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-jaxrs",
-      "version": "0.1.0-SNAPSHOT"
+      "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-mp-jwt-api",
-      "version": "0.1.0-SNAPSHOT"
+      "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-parent",
-      "version": "0.1.0-SNAPSHOT"
+      "version": "0.2.0-SNAPSHOT"
     }
   ],
   "consumes": [
