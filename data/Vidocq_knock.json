@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/knock",
   "branch": "main",
-  "commit_sha": "05f80056a02ee39db96ec8e2dad7a1061878be65",
-  "updated_at": "2026-06-05T07:48:30Z",
+  "commit_sha": "95059b4363677d1462fb34936e111fda68fbe0bd",
+  "updated_at": "2026-06-07T21:17:04Z",
   "produces": [
     {
       "groupId": "io.vidocq.knock",
@@ -67,6 +67,20 @@
     },
     {
       "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-api",
+      "version": "0.2.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-api",
+      "version": "",
+      "scope": "provided",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-classloader-spi",
       "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
@@ -92,13 +106,6 @@
       "version": "",
       "scope": "test",
       "type": "jar"
-    },
-    {
-      "groupId": "io.vidocq.vauban",
-      "artifactId": "vauban-maven-plugin",
-      "version": "${vauban.version}",
-      "scope": "build",
-      "type": "maven-plugin"
     }
   ]
 }
