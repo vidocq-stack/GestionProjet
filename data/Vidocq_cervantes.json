@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/cervantes",
   "branch": "main",
-  "commit_sha": "8cae4327a76915532d06c32c8ec9a7c5af71a238",
-  "updated_at": "2026-06-05T10:07:28Z",
+  "commit_sha": "3b5864ff1557f690a2b01fd6d72776b6bb9270f7",
+  "updated_at": "2026-06-07T21:18:08Z",
   "produces": [
     {
       "groupId": "io.vidocq.cervantes",
@@ -133,6 +133,20 @@
     },
     {
       "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-api",
+      "version": "0.2.0-SNAPSHOT",
+      "scope": "compile",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-api",
+      "version": "",
+      "scope": "provided",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-classloader-spi",
       "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
@@ -158,13 +172,6 @@
       "version": "",
       "scope": "test",
       "type": "jar"
-    },
-    {
-      "groupId": "io.vidocq.vauban",
-      "artifactId": "vauban-maven-plugin",
-      "version": "${vauban.version}",
-      "scope": "build",
-      "type": "maven-plugin"
     }
   ]
 }
