@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/mansart",
   "branch": "main",
-  "commit_sha": "9e33505d8fbec02b40b34755ce421a4eeabe8662",
-  "updated_at": "2026-06-07T07:42:56Z",
+  "commit_sha": "68b85b71c8b03b29140306fb03342b4e01e814c7",
+  "updated_at": "2026-06-07T21:18:17Z",
   "produces": [
     {
       "groupId": "io.vidocq.mansart",
@@ -97,6 +97,11 @@
     },
     {
       "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-transactions-cdi-jpms-it",
+      "version": "0.1.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-transactions-core",
       "version": "0.1.0-SNAPSHOT"
     },
@@ -114,9 +119,30 @@
   "consumes": [
     {
       "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-api",
+      "version": "0.2.0-SNAPSHOT",
+      "scope": "provided",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-classloader-spi",
+      "version": "0.2.0-SNAPSHOT",
+      "scope": "runtime",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-classloader-spi",
       "version": "0.2.0-SNAPSHOT",
       "scope": "test",
+      "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-core",
+      "version": "0.2.0-SNAPSHOT",
+      "scope": "compile",
       "type": "jar"
     },
     {
