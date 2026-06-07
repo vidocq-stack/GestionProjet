@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/cassini",
   "branch": "main",
-  "commit_sha": "a25fd0529ddd40e03c1de06cb438b7422eca6822",
-  "updated_at": "2026-06-05T06:18:09Z",
+  "commit_sha": "f4c9a43f52596e795415e8e88da28cd0d03fc34e",
+  "updated_at": "2026-06-07T21:17:02Z",
   "produces": [
     {
       "groupId": "io.vidocq.cassini",
@@ -155,13 +155,6 @@
       "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
-    },
-    {
-      "groupId": "io.vidocq.vauban",
-      "artifactId": "vauban-maven-plugin",
-      "version": "${vauban.version}",
-      "scope": "build",
-      "type": "maven-plugin"
     }
   ]
 }
