@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "399d361e99862c972c7db8194cd2312afdd46b67",
-  "updated_at": "2026-06-06T02:12:13Z",
+  "commit_sha": "5bfba43bb522848836b5d840524b533790c611fc",
+  "updated_at": "2026-06-07T21:18:11Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
@@ -23,6 +23,11 @@
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-cassini-rest-extension-codegen",
+      "version": "0.2.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.runtime",
+      "artifactId": "vidocq-runtime-cervantes-jwt-example",
       "version": "0.2.0-SNAPSHOT"
     },
     {
@@ -98,6 +103,11 @@
     {
       "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-knock-extension",
+      "version": "0.2.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.runtime",
+      "artifactId": "vidocq-runtime-knock-health-example",
       "version": "0.2.0-SNAPSHOT"
     },
     {
@@ -186,6 +196,13 @@
       "version": "",
       "scope": "runtime",
       "type": "jar"
+    },
+    {
+      "groupId": "io.vidocq.cassini",
+      "artifactId": "cassini-maven-plugin",
+      "version": "${cassini.version}",
+      "scope": "build",
+      "type": "maven-plugin"
     },
     {
       "groupId": "io.vidocq.cassini",
