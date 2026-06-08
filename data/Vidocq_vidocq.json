@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "0098d737ca14993a17bab404122897ccc37dea36",
-  "updated_at": "2026-06-08T14:14:38Z",
+  "commit_sha": "80b2faa2678e6f1f47f1f01676cbda362db4757e",
+  "updated_at": "2026-06-08T14:44:21Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
@@ -37,7 +37,7 @@
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-chappe-extension",
+      "artifactId": "vidocq-runtime-chappe-webserver-extension",
       "version": "0.2.0-SNAPSHOT"
     },
     {
@@ -57,12 +57,12 @@
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-cyrano-extension",
+      "artifactId": "vidocq-runtime-cyrano-rest-client-extension",
       "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-dirac-extension",
+      "artifactId": "vidocq-runtime-dirac-metrics-extension",
       "version": "0.2.0-SNAPSHOT"
     },
     {
@@ -92,7 +92,7 @@
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-humboldt-extension",
+      "artifactId": "vidocq-runtime-humboldt-telemetry-extension",
       "version": "0.2.0-SNAPSHOT"
     },
     {
@@ -122,12 +122,12 @@
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-knock-extension",
+      "artifactId": "vidocq-runtime-knock-health-example",
       "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-knock-health-example",
+      "artifactId": "vidocq-runtime-knock-health-extension",
       "version": "0.2.0-SNAPSHOT"
     },
     {
@@ -177,7 +177,7 @@
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-ravel-extension",
+      "artifactId": "vidocq-runtime-ravel-config-extension",
       "version": "0.2.0-SNAPSHOT"
     },
     {
