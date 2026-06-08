@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/mansart",
   "branch": "main",
-  "commit_sha": "3b67deac9540ebb042ac11202c0dc744136940a2",
-  "updated_at": "2026-06-08T10:56:09Z",
+  "commit_sha": "c652605aaef5ca55c59581af844388020cafe84d",
+  "updated_at": "2026-06-08T15:53:03Z",
   "produces": [
     {
       "groupId": "io.vidocq.mansart",
@@ -33,6 +33,21 @@
     {
       "groupId": "io.vidocq.mansart",
       "artifactId": "mansart-data-dialects",
+      "version": "0.1.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-data-external-it",
+      "version": "0.1.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-data-external-lib",
+      "version": "0.1.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.mansart",
+      "artifactId": "mansart-data-maven-plugin",
       "version": "0.1.0-SNAPSHOT"
     },
     {
