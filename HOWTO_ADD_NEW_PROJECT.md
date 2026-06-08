@@ -36,7 +36,7 @@ Arborescence minimale attendue (s'inspirer de `vauban/`, `chappe/`, `cyrano/`) :
 <nom-court>/
 ├── .sdkmanrc                  ← java=25-tem, maven=3.9.16
 ├── .gitignore                 ← target/, *.iml, .idea/, etc.
-├── LICENSE                    ← Apache-2.0 (cohérence écosystème)
+├── LICENSE                    ← EPL-2.0 OR EUPL-1.2 OR GPL-2.0-or-later (cohérence écosystème)
 ├── README.md                  ← vue produit : modules, prérequis, commandes
 ├── CLAUDE.md                  ← guide spécifique pour Claude Code dans ce repo
 ├── AGENTS.md (optionnel)      ← inventaire agents dispo dans .claude/agents/
