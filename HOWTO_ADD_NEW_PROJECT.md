@@ -215,7 +215,7 @@ indexer + classloader-spi sont tous explicités) :
 ```
 
 > ⚠️ **Anti-pattern repéré sur la PR `add-cyrano`** : seul
-> `vidocq-runtime-cyrano-extension` est dans le dependencyManagement, les artefacts
+> `vidocq-runtime-cyrano-rest-client-extension` est dans le dependencyManagement, les artefacts
 > cyrano-api/core/cdi-vauban sont consommés directement via `${cyrano.version}`
 > dans le pom de l'extension. Ça marche, mais c'est incohérent avec le pattern
 > Vauban (qui liste *tous* ses artefacts). Pour rester homogène, ajouter

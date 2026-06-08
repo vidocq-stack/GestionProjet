@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "80b2faa2678e6f1f47f1f01676cbda362db4757e",
-  "updated_at": "2026-06-08T14:44:21Z",
+  "commit_sha": "eedf70d4af8463dcbdedd42939dffb0bcf615142",
+  "updated_at": "2026-06-08T10:11:06Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
@@ -77,16 +77,6 @@
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-grimm-openapi-extension",
-      "version": "0.2.0-SNAPSHOT"
-    },
-    {
-      "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-grimm-openapi-ui-extension",
-      "version": "0.2.0-SNAPSHOT"
-    },
-    {
-      "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-h2-module",
       "version": "0.2.0-SNAPSHOT"
     },
@@ -112,22 +102,17 @@
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-it-grimm-openapi",
-      "version": "0.2.0-SNAPSHOT"
-    },
-    {
-      "groupId": "io.vidocq.runtime",
       "artifactId": "vidocq-runtime-it-humboldt-cassini",
       "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-knock-health-example",
+      "artifactId": "vidocq-runtime-knock-health-extension",
       "version": "0.2.0-SNAPSHOT"
     },
     {
       "groupId": "io.vidocq.runtime",
-      "artifactId": "vidocq-runtime-knock-health-extension",
+      "artifactId": "vidocq-runtime-knock-health-example",
       "version": "0.2.0-SNAPSHOT"
     },
     {
@@ -356,13 +341,6 @@
       "type": "jar"
     },
     {
-      "groupId": "io.vidocq.grimm",
-      "artifactId": "grimm-cdi-vauban",
-      "version": "${grimm.version}",
-      "scope": "compile",
-      "type": "jar"
-    },
-    {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-cdi",
       "version": "0.1.0-SNAPSHOT",
@@ -479,13 +457,6 @@
       "artifactId": "ravel-core",
       "version": "0.1.0-SNAPSHOT",
       "scope": "compile",
-      "type": "jar"
-    },
-    {
-      "groupId": "io.vidocq.ravel",
-      "artifactId": "ravel-mp-config-api",
-      "version": "${ravel.version}",
-      "scope": "runtime",
       "type": "jar"
     },
     {

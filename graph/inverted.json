@@ -755,7 +755,7 @@
       "consumed_by": [],
       "produced_by": "Vidocq/vidocq"
     },
-    "io.vidocq.runtime:vidocq-runtime-chappe-extension": {
+    "io.vidocq.runtime:vidocq-runtime-chappe-webserver-extension": {
       "consumed_by": [],
       "produced_by": "Vidocq/vidocq"
     },
@@ -767,7 +767,7 @@
       "consumed_by": [],
       "produced_by": "Vidocq/vidocq"
     },
-    "io.vidocq.runtime:vidocq-runtime-cyrano-extension": {
+    "io.vidocq.runtime:vidocq-runtime-cyrano-rest-client-extension": {
       "consumed_by": [],
       "produced_by": "Vidocq/vidocq"
     },
@@ -779,7 +779,7 @@
       "consumed_by": [],
       "produced_by": "Vidocq/vidocq"
     },
-    "io.vidocq.runtime:vidocq-runtime-humboldt-extension": {
+    "io.vidocq.runtime:vidocq-runtime-humboldt-telemetry-extension": {
       "consumed_by": [],
       "produced_by": "Vidocq/vidocq"
     },
@@ -795,7 +795,7 @@
       "consumed_by": [],
       "produced_by": "Vidocq/vidocq"
     },
-    "io.vidocq.runtime:vidocq-runtime-knock-extension": {
+    "io.vidocq.runtime:vidocq-runtime-knock-health-extension": {
       "consumed_by": [],
       "produced_by": "Vidocq/vidocq"
     },
