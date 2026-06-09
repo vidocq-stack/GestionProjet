@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vidocq",
   "branch": "main",
-  "commit_sha": "b5c4e2609ff4f71fc8a54a1e171c4d0ba9baa225",
-  "updated_at": "2026-06-09T04:56:03Z",
+  "commit_sha": "502a79b2202e293149925ed20b0ab18ed7892f43",
+  "updated_at": "2026-06-09T07:13:44Z",
   "produces": [
     {
       "groupId": "io.vidocq.runtime",
@@ -264,35 +264,35 @@
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-api",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-cdi-vauban",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-core",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-jaxrs",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.cervantes",
       "artifactId": "cervantes-mp-jwt-api",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
@@ -390,28 +390,28 @@
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-cdi",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-rest",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-runtime",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.humboldt",
       "artifactId": "humboldt-sdk-trace",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
@@ -488,21 +488,21 @@
     {
       "groupId": "io.vidocq.ravel",
       "artifactId": "ravel-api",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.ravel",
       "artifactId": "ravel-cdi-vauban",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
     {
       "groupId": "io.vidocq.ravel",
       "artifactId": "ravel-core",
-      "version": "0.1.0-SNAPSHOT",
+      "version": "0.2.0-SNAPSHOT",
       "scope": "compile",
       "type": "jar"
     },
