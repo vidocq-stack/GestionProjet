@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/knock",
   "branch": "main",
-  "commit_sha": "e1876f1899a8dedd8a0163d3ee4df726cb6ac5bd",
-  "updated_at": "2026-06-08T10:56:01Z",
+  "commit_sha": "de24871cbe836d6a4dfba65fb28e334b3a61c0c6",
+  "updated_at": "2026-06-11T14:31:15Z",
   "produces": [
     {
       "groupId": "io.vidocq.knock",
