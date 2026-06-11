@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/heisenberg",
   "branch": "main",
-  "commit_sha": "e7dc9cce74acc302bdf926a0e1f3603f9eeb9082",
-  "updated_at": "2026-06-08T10:55:49Z",
+  "commit_sha": "045b4f3b8d0b2927c781e836b608a82e53437577",
+  "updated_at": "2026-06-11T14:25:18Z",
   "produces": [
     {
       "groupId": "io.vidocq.heisenberg",
