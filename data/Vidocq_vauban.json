@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/vauban",
   "branch": "main",
-  "commit_sha": "850ddc7b2733ec87a9a1defa0ab3773f2d7a1e0d",
-  "updated_at": "2026-06-08T10:47:27Z",
+  "commit_sha": "d48b9ed7d8ed260ae1f168b3b726525051f214ea",
+  "updated_at": "2026-06-11T05:48:08Z",
   "produces": [
     {
       "groupId": "io.vidocq.vauban",
@@ -48,6 +48,11 @@
     {
       "groupId": "io.vidocq.vauban",
       "artifactId": "vauban-indexer",
+      "version": "0.2.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.vauban",
+      "artifactId": "vauban-jpms-it",
       "version": "0.2.0-SNAPSHOT"
     },
     {
