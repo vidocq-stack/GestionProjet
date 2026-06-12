@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/cyrano",
   "branch": "main",
-  "commit_sha": "544dd8fd30331717c832dc7c62fd814b542c3141",
-  "updated_at": "2026-06-09T19:12:59Z",
+  "commit_sha": "1e1a6b27d98a754343863cbc6cbe2147b3f76925",
+  "updated_at": "2026-06-12T08:22:20Z",
   "produces": [
     {
       "groupId": "io.vidocq.cyrano",
@@ -28,6 +28,11 @@
     {
       "groupId": "io.vidocq.cyrano",
       "artifactId": "cyrano-parent",
+      "version": "0.2.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.cyrano",
+      "artifactId": "cyrano-processor",
       "version": "0.2.0-SNAPSHOT"
     }
   ],
