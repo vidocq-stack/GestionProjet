@@ -2,8 +2,8 @@
   "schema_version": 1,
   "repo": "Vidocq/knock",
   "branch": "main",
-  "commit_sha": "de24871cbe836d6a4dfba65fb28e334b3a61c0c6",
-  "updated_at": "2026-06-11T14:31:15Z",
+  "commit_sha": "faaf5d60511975d605e1e4347654387ad1b2575d",
+  "updated_at": "2026-06-12T06:06:10Z",
   "produces": [
     {
       "groupId": "io.vidocq.knock",
@@ -33,6 +33,11 @@
     {
       "groupId": "io.vidocq.knock",
       "artifactId": "knock-parent",
+      "version": "0.2.0-SNAPSHOT"
+    },
+    {
+      "groupId": "io.vidocq.knock",
+      "artifactId": "knock-tck",
       "version": "0.2.0-SNAPSHOT"
     }
   ],
