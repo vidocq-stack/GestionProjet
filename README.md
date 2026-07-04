@@ -62,11 +62,11 @@ Chaque consommateur publie son inventaire dans un fichier dont le nom est
   "commit_sha": "abc123...",
   "updated_at": "2026-05-10T12:34:56Z",
   "produces": [
-    {"groupId": "io.vidocq.cassini", "artifactId": "cassini-core",  "version": "0.1.0-SNAPSHOT"}
+    {"groupId": "io.vidocq.cassini", "artifactId": "cassini-core",  "version": "0.2.0"}
   ],
   "consumes": [
-    {"groupId": "io.vidocq.vauban", "artifactId": "vauban-core",    "version": "0.1.0-SNAPSHOT", "scope": "compile"},
-    {"groupId": "io.vidocq.vauban", "artifactId": "vauban-indexer", "version": "0.1.0-SNAPSHOT", "scope": "build", "type": "maven-plugin"}
+    {"groupId": "io.vidocq.vauban", "artifactId": "vauban-core",    "version": "0.2.0", "scope": "compile"},
+    {"groupId": "io.vidocq.vauban", "artifactId": "vauban-indexer", "version": "0.2.0", "scope": "build", "type": "maven-plugin"}
   ]
 }
 ```

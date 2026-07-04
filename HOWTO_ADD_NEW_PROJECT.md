@@ -22,7 +22,7 @@ couvre les conventions de structure du repo, les fichiers méta obligatoires
   (ex. `<cyrano.version>`). Cette property porte le même nom que le repo court
   — sans quoi `ci/build-impacted` ne peut pas réécrire la version PR de la dép
   amont (`versions:set-property <nom-court>.version=<PR>`) lors d'une PR amont.
-- **Version initiale** : `0.1.0-SNAPSHOT` par défaut (Mansart est l'exception
+- **Version initiale** : `0.2.0` par défaut (Mansart est l'exception
   historique à `1.0.0-SNAPSHOT`).
 - **Java / Maven** : Java 25 Temurin + Maven 3.9.16, pinés via `.sdkmanrc`.
 
@@ -70,7 +70,7 @@ Arborescence minimale attendue (s'inspirer de `vauban/`, `chappe/`, `cyrano/`) :
 
     <groupId>io.vidocq.<nom-court></groupId>
     <artifactId><nom-court>-parent</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0</version>
     <packaging>pom</packaging>
     <name><Nom-Court></name>
     <description>… description courte avec mention zéro-dep / JPMS / VT …</description>
@@ -183,7 +183,7 @@ d'extension. Quatre points à modifier dans `vidocq/vidocq/` :
 ```xml
 <properties>
     …
-    <<nom-court>.version>0.1.0-SNAPSHOT</<nom-court>.version>
+    <<nom-court>.version>0.2.0</<nom-court>.version>
     …
 </properties>
 ```
@@ -223,7 +223,7 @@ indexer + classloader-spi sont tous explicités) :
 
 ### 3.3 Création du module wrapper `vidocq-runtime-<nom-court>-extension`
 
-Sous `vidocq-runtime-core-extensions/vidocq-runtime-<nom-court>-extension/`, un POM
+Sous `vidocq-runtime-extensions/vidocq-runtime-<nom-court>-extension/`, un POM
 Model 4.1.0 :
 
 ```xml
@@ -231,7 +231,7 @@ Model 4.1.0 :
     <modelVersion>4.1.0</modelVersion>
     <parent>
         <groupId>io.vidocq.runtime</groupId>
-        <artifactId>vidocq-runtime-core-extensions</artifactId>
+        <artifactId>vidocq-runtime-extensions</artifactId>
     </parent>
     <artifactId>vidocq-runtime-<nom-court>-extension</artifactId>
     <name>Vidocq :: Core Extensions :: <Description>></name>
@@ -250,7 +250,7 @@ Model 4.1.0 :
 Ajouter au moins une classe wrapper + un `module-info.java` qui ré-exporte
 ou déclare `provides ServiceLoader …` selon la SPI vidocq.
 
-### 3.4 Enregistrement dans `vidocq-runtime-core-extensions/pom.xml`
+### 3.4 Enregistrement dans `vidocq-runtime-extensions/pom.xml`
 
 ```xml
 <subprojects>
@@ -265,7 +265,7 @@ ou déclare `provides ServiceLoader …` selon la SPI vidocq.
 ## 4. Workflows Forgejo CI/CD
 
 C'est l'étape **la plus importante côté nouveau producteur** — sans elle, son
-artefact `0.1.0-SNAPSHOT` n'est pas publié sur `central-snapshots` et **toutes
+artefact `0.2.0` n'est pas publié sur `central-snapshots` et **toutes
 les PR consommatrices vont planter** avec
 `Could not resolve dependencies for io.vidocq.<nom-court>:…` (le job PR d'un
 consommateur résout ses dépendances amont non modifiées depuis `central-snapshots`).
@@ -382,14 +382,14 @@ Le fichier doit valider contre `data/schema.json` :
 - [ ] `.forgejo/workflows/ci.yml` (setup-maven + deploy-maven sur push main)
 - [ ] `.forgejo/workflows/pr.yml` (job unique `pr-validate` du template producteur)
 - [ ] `.forgejo/workflows/update-dep-graph.yml` activé une fois
-- [ ] **`0.1.0-SNAPSHOT` publié sur `central-snapshots`** (sinon les PR aval
+- [ ] **`0.2.0` publié sur `central-snapshots`** (sinon les PR aval
       planteront à la résolution des dépendances amont)
 
 ### Côté `vidocq/vidocq`
 - [ ] Property `<<nom>.version>` ajoutée au parent POM
 - [ ] Artefacts upstream listés dans `<dependencyManagement>` du parent
-- [ ] Wrapper `vidocq-runtime-<nom>-extension` créé sous `vidocq-runtime-core-extensions/`
-- [ ] Wrapper listé dans `<subprojects>` de `vidocq-runtime-core-extensions/pom.xml`
+- [ ] Wrapper `vidocq-runtime-<nom>-extension` créé sous `vidocq-runtime-extensions/`
+- [ ] Wrapper listé dans `<subprojects>` de `vidocq-runtime-extensions/pom.xml`
 - [ ] Wrapper référencé dans `<dependencyManagement>` du parent
 - [ ] Test de non-régression `M5` (ServiceLoader + JPMS provides)
 
