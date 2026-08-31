@@ -1,6 +1,6 @@
 # Copy verbatim into `.forgejo/workflows/pr.yml` of each *producer* repo
 # (vauban, chappe, champollion, foy, cassini, vidocq, mansart, ravel, dirac,
-#  heisenberg, cyrano, humboldt, knock, grimm, cervantes).
+#  heisenberg, cyrano, humboldt, knock, grimm, cervantes, erasmus).
 #
 # Pull-request validation in a SINGLE job. There is NO staging registry anymore
 # (the old Reposilite repo.vidocq.dev is gone, and Maven Central cannot host
