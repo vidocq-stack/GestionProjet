@@ -113,8 +113,14 @@ By making a contribution to this project, I certify that:
     this project or the open source license(s) involved.
 ```
 
-## Code conventions
+## Conventions
 
-See `CLAUDE.md` / `README.md` at the root of this repository for the project's
-coding standards (JPMS-strict, zero runtime dependencies, virtual threads,
-TDD, English-only code and Javadoc).
+This repository holds no product code: it describes the CI and holds the workflow
+templates (see [`README.md`](README.md)). The coding standards of the ecosystem
+(strict Java Modules, zero runtime dependencies, virtual threads, TDD, English
+only) are in the workspace guide,
+[`Vidocq/vidocq-workspace` AGENTS.md](https://codefloe.com/Vidocq/vidocq-workspace/src/branch/main/AGENTS.md).
+
+A change to [`workflow-templates/pr-producer.yml`](workflow-templates/pr-producer.yml)
+is a change to the `pr.yml` of every producer repository: propagate it to each of
+them in the same move. Every Markdown file is written in English.

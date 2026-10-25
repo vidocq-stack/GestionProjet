@@ -1,424 +1,282 @@
-# HOWTO — Ajouter un nouveau projet à l'écosystème Vidocq
+# HOWTO — Add a new repository to the Vidocq ecosystem
 
-Ce guide décrit la procédure complète pour intégrer un **nouveau sous-projet
-producteur** dans l'écosystème Vidocq (ex. : `cyrano`, `knock`, futurs). Il
-couvre les conventions de structure du repo, les fichiers méta obligatoires
-(dont les fichiers Claude / agents / skills), la wiring Maven côté
-`vidocq/vidocq`, et l'enregistrement dans le graphe `GestionProjet`.
+This guide is the procedure to bring a **new producer repository** (a brick such as `cyrano` or
+`knock`) into the Vidocq ecosystem: the layout of the repository, its build, its workflows, its
+registration in the dependency graph, and its wiring into `Vidocq/vidocq`. The CI it plugs into is
+described in [`README.md`](README.md).
 
-> **Public visé** : mainteneurs Vidocq, agents IA qui doivent bootstrap un nouveau
-> module sans surprise. Référencé par l'agent `claude` et le skill `init`.
-
----
-
-## 0. Pré-requis & nommage
-
-- **GroupId** : `io.vidocq.<nom-court>` (ex. `io.vidocq.cyrano`). Le `groupId`
-  doit matcher la regex `^io\.vidocq(\..+)?$` — c'est le filtre du graphe
-  GestionProjet (cf. `data/schema.json`).
-- **Nom du repo Forgejo** : `vidocq/<nom-court>` (ex. `vidocq/cyrano`). Whitelist
-  stricte côté GestionProjet.
-- **Nom de la property Maven** dans les consommateurs : `<nom-court>.version`
-  (ex. `<cyrano.version>`). Cette property porte le même nom que le repo court
-  — sans quoi `ci/build-impacted` ne peut pas réécrire la version PR de la dép
-  amont (`versions:set-property <nom-court>.version=<PR>`) lors d'une PR amont.
-- **Version initiale** : `0.2.0` par défaut (Mansart est l'exception
-  historique à `1.0.0-SNAPSHOT`).
-- **Java / Maven** : Java 25 Temurin + Maven 3.9.16, pinés via `.sdkmanrc`.
+> **Audience**: Vidocq maintainers, and AI agents bootstrapping a new module. When in doubt, copy
+> from a recent brick: `knock` is a small, complete reference.
 
 ---
 
-## 1. Structure du repo producteur
+## 0. Prerequisites and naming
 
-Arborescence minimale attendue (s'inspirer de `vauban/`, `chappe/`, `cyrano/`) :
+- **Repository**: `Vidocq/<short-name>` on Codefloe (for example `Vidocq/cyrano`). The graph only
+  indexes repositories of the `Vidocq` organisation.
+- **groupId**: `io.vidocq.<short-name>` (for example `io.vidocq.cyrano`). Only artifacts whose
+  groupId matches `^io\.vidocq(\..+)?$` enter the graph.
+- **Version property in consumers**: `<short-name>.version` (for example `<cyrano.version>`),
+  named exactly like the repository. The downstream check pins the version of the producer under
+  pull request through this property; a consumer without it is built against the published
+  SNAPSHOT, and the job warns that it checks nothing.
+- **Version**: the current version of the ecosystem (`0.4.0-SNAPSHOT` at the time of writing,
+  aligned with `vidocq-parent`).
+- **Java / Maven**: Java 25 Temurin and Maven 3.9.16, pinned in `.sdkmanrc`; every POM is
+  `modelVersion 4.0.0`.
+
+---
+
+## 1. Repository layout
 
 ```
-<nom-court>/
-├── .sdkmanrc                  ← java=25-tem, maven=3.9.16
-├── .gitignore                 ← target/, *.iml, .idea/, etc.
-├── LICENSE                    ← EPL-2.0 OR EUPL-1.2 OR GPL-2.0-or-later (cohérence écosystème)
-├── README.md                  ← vue produit : modules, prérequis, commandes
-├── CLAUDE.md                  ← guide spécifique pour Claude Code dans ce repo
-├── AGENTS.md (optionnel)      ← inventaire agents dispo dans .claude/agents/
-├── ROADMAP.md (optionnel)     ← jalons M1/M2/Mx
-├── TCK.md (optionnel)         ← procédure TCK officiel si applicable
-├── BUG.md                     ← traçabilité bugs (cf. CLAUDE.md workspace)
-├── BENCH.md                   ← traçabilité benchmarks (idem)
-├── pom.xml                    ← root POM (Model 4.1.0, root="true", pas de <parent>)
-├── <nom>-api/                 ← API publique
-├── <nom>-core/                ← implémentation standalone
-├── <nom>-cdi-vauban/          ← intégration CDI via Vauban (si applicable)
-├── <nom>-tck/                 ← TCK officiel, HORS reactor (cf. §5)
-├── .claude/                   ← config Claude Code locale
-│   ├── agents/                ← agents spécialisés (jpms-guardian, etc.)
-│   └── skills/                ← skills (/log-bug, /log-bench)
-└── .forgejo/workflows/        ← CI/CD (cf. §4)
-    ├── ci.yml                 ← build + deploy snapshots sur push main
-    ├── pr.yml                 ← validation PR en 1 job (build local + ci/build-impacted)
-    └── update-dep-graph.yml   ← maintenance GestionProjet
+<short-name>/
+├── .sdkmanrc                 java=25-tem, maven=3.9.16
+├── .gitignore
+├── .mvn/, mvnw, mvnw.cmd     Maven wrapper
+├── LICENSE, NOTICE, licenses/   EPL-2.0 OR EUPL-1.2 OR GPL-2.0-or-later
+├── CONTRIBUTING.md           CLA, GPG signature, DCO (copy from a brick)
+├── README.md                 product view: modules, prerequisites, commands
+├── CLAUDE.md, AGENTS.md      guide for AI agents working in this repository
+├── BUG.md, BENCH.md          bug and benchmark records (workspace rule)
+├── pom.xml                   root POM, parent io.vidocq:vidocq-parent
+├── <name>-api/  <name>-core/  <name>-cdi-vauban/ ...
+├── <name>-tck/               official TCK runner, in the reactor behind the `tck` profile
+├── run-official-tck-<spec>.sh
+├── docs/en/                  Antora component (English only)
+└── .forgejo/workflows/       see §4
 ```
 
-### 1.1 Root POM (Model 4.1.0)
+### 1.1 Root POM
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.1.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.1.0 http://maven.apache.org/xsd/maven-4.1.0.xsd"
-         root="true">
-    <modelVersion>4.1.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.vidocq</groupId>
+        <artifactId>vidocq-parent</artifactId>
+        <version>0.4.0-SNAPSHOT</version>
+        <relativePath/>
+    </parent>
 
-    <groupId>io.vidocq.<nom-court></groupId>
-    <artifactId><nom-court>-parent</artifactId>
-    <version>0.2.0</version>
+    <groupId>io.vidocq.<short-name></groupId>
+    <artifactId><short-name>-parent</artifactId>
+    <version>0.4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name><Nom-Court></name>
-    <description>… description courte avec mention zéro-dep / JPMS / VT …</description>
 
-    <subprojects>
-        <subproject><nom-court>-api</subproject>
-        <subproject><nom-court>-core</subproject>
-        <subproject><nom-court>-cdi-vauban</subproject>
-        <!-- PAS le tck : volontairement hors reactor -->
-    </subprojects>
+    <modules>
+        <module><short-name>-api</module>
+        <module><short-name>-core</module>
+    </modules>
 
     <properties>
-        <maven.compiler.release>25</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- versions des deps Vidocq amont (Vauban, Chappe, etc.) si consommateur -->
+        <!-- Upstream Vidocq bricks, one property per repository: <vauban.version>, ... -->
+        <!-- The TCK the pull requests are gated on (see §5). -->
+        <ci.tck.command>mvn -B -ntp -P tck,tck-official -pl <short-name>-tck test</ci.tck.command>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>vidocq-releases</id>
-            <url>https://repo.vidocq.dev/releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>vidocq-snapshots</id>
-            <url>https://repo.vidocq.dev/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>tck</id>
+            <modules>
+                <module><short-name>-tck</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>
 ```
 
-⚠️ **Model 4.1.0** : les modules enfants déclarent juste `<parent>` sans
-version explicite. Le module `<nom>-tck` reste en **Model 4.0.0** standalone et
-**ne déclare pas de `<parent>`** (incompatibilité ShrinkWrap Resolver 3.3 vs
-Model 4.1.0 — voir CLAUDE.md du workspace).
+`vidocq-parent` brings the publication settings (the `central-snapshots` repository, the
+`release` profile with GPG and `central-publishing`, `deployAtEnd=true`) and the plugin versions:
+do not repeat them. Copy the `<licenses>`, `<url>` and `<scm>` blocks from a brick.
 
 ---
 
-## 2. Fichiers méta obligatoires
+## 2. Meta files
 
-### 2.1 `.sdkmanrc`
-
-```
-java=25-tem
-maven=3.9.16
-```
-
-### 2.2 `CLAUDE.md` (gabarit minimal)
-
-```markdown
-# CLAUDE.md — <Nom-Court>
-
-Ce fichier complète le `CLAUDE.md` du workspace Vidocq. À lire en priorité
-avant toute modification dans ce repo.
-
-## Identité
-- groupId : `io.vidocq.<nom-court>`
-- spec implémentée : <ex. MicroProfile Rest Client 4.0>
-- philosophie : zéro-dep, JPMS strict, Virtual Threads, codegen statique
-
-## Modules
-| Module | Rôle |
-|---|---|
-| `<nom>-api` | … |
-| `<nom>-core` | … |
-| `<nom>-cdi-vauban` | … |
-| `<nom>-tck` | TCK officiel — hors reactor |
-
-## Commandes
-- `./mvnw -ntp install -DskipTests` : build complet
-- `./mvnw test` : tests unitaires
-- `./run-official-tck-<spec>.sh` : TCK officiel (si applicable)
-
-## Contraintes spécifiques
-- … (limitations connues, exceptions à la philosophie zéro-dep, etc.)
-
-## Traçabilité
-- Bugs : voir `BUG.md`
-- Benchmarks : voir `BENCH.md`
-```
-
-### 2.3 `BUG.md` et `BENCH.md`
-
-Initialiser dès la création du repo, même vides (skills `/log-bug`
-et `/log-bench` les créent à la volée sinon). Format documenté dans le
-`CLAUDE.md` du workspace.
-
-### 2.4 `.claude/` (config Claude Code locale)
-
-```
-.claude/
-├── agents/      ← copier les agents pertinents du workspace
-│                  (jpms-guardian, classfile-codegen, virtual-threads-reviewer,
-│                   dependency-gatekeeper, tck-runner)
-├── skills/      ← copier les skills /log-bug, /log-bench
-└── settings.local.json (optionnel, non commité par défaut)
-```
-
-Référencer les agents pertinents pour ce sous-projet — pas la peine d'inclure
-ce qui ne sert pas (un projet sans TCK n'a pas besoin de `tck-runner`).
+- **`.sdkmanrc`**: `java=25-tem` and `maven=3.9.16`.
+- **`CLAUDE.md` / `AGENTS.md`**: identity (groupId, implemented specification), the module table,
+  the commands (`./mvnw -ntp install -DskipTests`, `./mvnw test`, `./run-official-tck-<spec>.sh`),
+  the repository's specific constraints, and pointers to `BUG.md` and `BENCH.md`. They complement
+  the workspace `CLAUDE.md`.
+- **`BUG.md` and `BENCH.md`**: create them with the repository, even empty (the `/log-bug` and
+  `/log-bench` skills create them otherwise).
+- **`.claude/`** (optional): the agents and skills of the workspace that matter for this
+  repository.
+- **Every Markdown and AsciiDoc file is in English.**
 
 ---
 
-## 3. Wiring côté `vidocq/vidocq`
+## 3. Wiring in `Vidocq/vidocq`
 
-L'orchestrateur `vidocq` consomme le sous-projet via un wrapper
-d'extension. Quatre points à modifier dans `vidocq/vidocq/` :
+The runtime consumes the brick through an extension module. The layout of the runtime's reactor
+is described in vidocq's `CLAUDE.md` ("Architecture & reactor layout"); the usual changes are:
 
-### 3.1 Property dans le parent POM (`vidocq/pom.xml`)
+1. the property `<short-name>.version` in vidocq's root `pom.xml`;
+2. every consumed artifact of the brick in the root `<dependencyManagement>`;
+3. the extension module `vidocq-runtime-<short-name>-<role>-extension`, under the aggregator of its
+   domain in `vidocq-runtime-extensions/` (`*-essentials`, `*-jakartaee-core`, `*-jakartaee-web`,
+   `*-microprofile`), with its `module-info.java` (`provides VidocqExtension with ...`);
+4. its entries in `vidocq-runtime-bom` and in the extension catalog of `vidocq-runtime-tooling`.
 
-```xml
-<properties>
-    …
-    <<nom-court>.version>0.2.0</<nom-court>.version>
-    …
-</properties>
-```
-
-### 3.2 Entrées dans le `<dependencyManagement>`
-
-Pour **chaque artefact consommé** (pattern Vauban : api + core + cdi-vauban +
-indexer + classloader-spi sont tous explicités) :
-
-```xml
-<dependency>
-    <groupId>io.vidocq.<nom-court></groupId>
-    <artifactId><nom-court>-api</artifactId>
-    <version>${<nom-court>.version}</version>
-</dependency>
-<dependency>
-    <groupId>io.vidocq.<nom-court></groupId>
-    <artifactId><nom-court>-core</artifactId>
-    <version>${<nom-court>.version}</version>
-</dependency>
-<!-- etc. -->
-
-<!-- PUIS l'extension wrapper Vidocq elle-même : -->
-<dependency>
-    <groupId>io.vidocq.runtime</groupId>
-    <artifactId>vidocq-runtime-<nom-court>-extension</artifactId>
-    <version>${project.version}</version>
-</dependency>
-```
-
-> ⚠️ **Anti-pattern repéré sur la PR `add-cyrano`** : seul
-> `vidocq-runtime-cyrano-rest-client-extension` est dans le dependencyManagement, les artefacts
-> cyrano-api/core/cdi-vauban sont consommés directement via `${cyrano.version}`
-> dans le pom de l'extension. Ça marche, mais c'est incohérent avec le pattern
-> Vauban (qui liste *tous* ses artefacts). Pour rester homogène, ajouter
-> systématiquement chaque artefact upstream dans le dependencyManagement.
-
-### 3.3 Création du module wrapper `vidocq-runtime-<nom-court>-extension`
-
-Sous `vidocq-runtime-extensions/vidocq-runtime-<nom-court>-extension/`, un POM
-Model 4.1.0 :
-
-```xml
-<project xmlns="http://maven.apache.org/POM/4.1.0" …>
-    <modelVersion>4.1.0</modelVersion>
-    <parent>
-        <groupId>io.vidocq.runtime</groupId>
-        <artifactId>vidocq-runtime-extensions</artifactId>
-    </parent>
-    <artifactId>vidocq-runtime-<nom-court>-extension</artifactId>
-    <name>Vidocq :: Core Extensions :: <Description>></name>
-    <description>Wrapper Maven/JPMS qui active <Nom-Court> dans un déploiement vidocq.</description>
-
-    <dependencies>
-        <dependency>
-            <groupId>io.vidocq.<nom-court></groupId>
-            <artifactId><nom-court>-api</artifactId>
-        </dependency>
-        <!-- core, cdi-vauban, etc. : versions gérées par <dependencyManagement> du parent -->
-    </dependencies>
-</project>
-```
-
-Ajouter au moins une classe wrapper + un `module-info.java` qui ré-exporte
-ou déclare `provides ServiceLoader …` selon la SPI vidocq.
-
-### 3.4 Enregistrement dans `vidocq-runtime-extensions/pom.xml`
-
-```xml
-<subprojects>
-    …
-    <subproject>vidocq-runtime-<nom-court>-extension</subproject>
-    …
-</subprojects>
-```
+Open this pull request **after** the brick's first SNAPSHOT is on `central-snapshots` (§4.1):
+vidocq's build resolves the brick from there.
 
 ---
 
-## 4. Workflows Forgejo CI/CD
+## 4. Workflows
 
-C'est l'étape **la plus importante côté nouveau producteur** — sans elle, son
-artefact `0.2.0` n'est pas publié sur `central-snapshots` et **toutes
-les PR consommatrices vont planter** avec
-`Could not resolve dependencies for io.vidocq.<nom-court>:…` (le job PR d'un
-consommateur résout ses dépendances amont non modifiées depuis `central-snapshots`).
+Every workflow uses the composite actions of [`Vidocq/ci`](https://codefloe.com/Vidocq/ci), by
+absolute URL (`https://codefloe.com/Vidocq/ci/<action>@main`), on the `vidocq-runner` label.
 
-> 💡 C'est précisément la cause du fail de la PR `add-cyrano` dans
-> `vidocq/vidocq` en mai 2026 : `cyrano/.forgejo/workflows/` n'existe pas
-> encore au moment où on ouvre la PR consommatrice. Bootstrap les workflows
-> producteur AVANT d'ouvrir la PR vidocq.
+| Workflow | Copy from | Notes |
+|---|---|---|
+| `pr.yml` | [`workflow-templates/pr-producer.yml`](workflow-templates/pr-producer.yml) | Pull-request validation (§4.2). |
+| `update-dep-graph.yml` | [`workflow-templates/update-dep-graph.yml`](workflow-templates/update-dep-graph.yml) | Keeps the repository's entry in `Vidocq/dep-graph` (§6). |
+| `ci.yml` | any brick (knock) | Build, test and publish on `main` (§4.1). |
+| `merge-bot.yml` | any brick | The `/merge` and `/rebase` comment commands. |
+| `notify-docs.yml` | any brick | Rebuilds the docs site after a `main` push touching `docs/**`. |
+| `notify-slack.yml` | any brick | Pull-request opened / merged notifications. |
+| `sonar.yml` | any brick | SonarQube analysis, report mode (see `vidocq-workspace/QUALITY.md`). |
+| `release.yml`, `refresh-release-yml.yml` | any brick | Releases (see the `release-maven` README in `Vidocq/ci`). |
+| `downstream-nightly.yml` | vauban | Only once the repository has at least five transitive consumers in the graph (§4.3). |
 
-### 4.1 `.forgejo/workflows/ci.yml`
+### 4.1 `ci.yml` (push on `main`)
 
-Build + TCK + deploy sur push `main`. S'inspirer d'un repo existant
-(cassini/vauban) — tout passe par les composite actions du repo `Vidocq/ci` :
-- `Vidocq/ci/setup-maven@v1` — Java 25 Temurin + Maven 3.9.16 + `settings.xml`
-  (résolution des SNAPSHOT depuis `central-snapshots`)
-- `Vidocq/ci/run-tck@v1` — TCK officiel (si applicable)
-- `Vidocq/ci/deploy-maven@v1` — publie sur Maven Central (SNAPSHOT via
-  `maven-deploy-plugin` → `central-snapshots` ; RELEASE via `central-publishing`).
-  Secrets : `CENTRAL_USERNAME`, `CENTRAL_PASSWORD`, `GPG_PRIVATE_KEY`, `GPG_PASSPHRASE`.
-- `Vidocq/ci/notify-slack@v1` — notification
+One job, one pass: `deploy-maven` with `skip-tests: "false"` builds, tests and deploys the
+reactor, and `deployAtEnd` (from vidocq-parent) uploads nothing unless the whole reactor passed.
+Keep the `concurrency` block as it is:
 
-### 4.2 `.forgejo/workflows/pr.yml`
+```yaml
+concurrency:
+  group: publish-${{ github.repository }}
+  cancel-in-progress: false
+```
 
-Copier tel quel le template
-[`workflow-templates/pr-producer.yml`](workflow-templates/pr-producer.yml) : un
-**seul** job `pr-validate`.
+The first green run publishes the brick's SNAPSHOT on `central-snapshots`. **Do it before any
+consumer depends on the brick**: the downstream jobs and the consumers' own pull requests resolve
+every unchanged upstream from `central-snapshots`, and fail with
+`Could not resolve dependencies for io.vidocq.<short-name>:...` until it is there.
 
-- Build le producteur en version PR release-style `<base>-PR<num>.<sha8>` (sans
-  `-SNAPSHOT`) puis `mvn install` dans le `~/.m2` du runner — **rien n'est publié**.
-- L'action `Vidocq/ci/build-impacted@v1` découvre via GestionProjet les
-  consommateurs impactés (fermeture transitive, **ordre topologique**) et les
-  reclone/rebuild un à un contre les artefacts PR locaux.
-- Le succès de ce job unique est l'**unique required check** de la branch protection.
+### 4.2 `pr.yml` (pull requests)
 
-### 4.3 `.forgejo/workflows/update-dep-graph.yml`
+Copy [`workflow-templates/pr-producer.yml`](workflow-templates/pr-producer.yml), then keep the
+repository's own producer steps in the `producer` job (and its runner label on every job). Do
+not add a `paths:` filter: the docs-only, test-only and CI-only detection is done inside the
+jobs, so that the required check is always reported.
 
-Copier tel quel
-[`workflow-templates/update-dep-graph.yml`](workflow-templates/update-dep-graph.yml).
-Doit avoir accès au secret `VIDOCQ_BOT_TOKEN`. Lancer une fois manuellement en
-`workflow_dispatch` pour amorcer `data/vidocq_<nom-court>.json` dans
-GestionProjet.
+- The template reuses the validation of an unchanged code tree (`ci/validated-tree`, see
+  [README.md](README.md#reusing-the-validation-of-an-unchanged-code-tree)): the organisation secret
+  `VIDOCQ_BOT_TOKEN` must be able to push refs to the new repository, for the `record` step.
+- The TCK the pull requests run is the one the root pom declares: `ci.tck.modules`
+  (comma-separated modules, each run with `-Ptck`) and/or `ci.tck.command` (a shell command).
+  Declare neither to run no TCK on pull requests.
+- **Targeted consumer tests** (opt-in): add `tests: targeted` to the `build-one-consumer` step of
+  the `downstream` job, as knock's `pr.yml` does. Leave `graph-pruning` at its default (`false`).
+  See [README.md](README.md#targeted-consumer-tests-opt-in).
+- As a **consumer**, the repository may list in the root-pom property `ci.targeted.mention-local`
+  the files whose mentions of an artifact keep only their own module's tests (a generated
+  catalog of names that nothing resolves at run time).
 
-### 4.4 Aucun workflow consommateur dédié
+Set the branch protection of `main` (an `Owners` member does it, in the repository settings):
+signed commits required, fast-forward merges only, required checks
+`pr-validate / governance-checks (pull_request)` and `pr-validate / pr-validate (pull_request)`.
+Also enable the manual merge and its automatic detection, which the PR trains rely on.
 
-Le mécanisme `upstream-pr.yml` + dispatch est **supprimé** : `ci/build-impacted`
-reclone et rebuild les consommateurs directement dans le job du producteur. Un
-repo consommateur n'a donc **rien** à configurer côté réception — il suffit qu'il
-expose ses dépendances amont via des properties `<nom-amont>.version` (cf. §0).
+### 4.3 `downstream-nightly.yml`
+
+The pull-request check is flat: each consumer is built against the producer under pull request
+and the published SNAPSHOTs. A producer with at least five transitive consumers also runs, every
+night on `main`, the sequential chain (`ci/build-impacted`) that rebuilds every consumer in order.
+Copy vauban's file and stagger its cron by five minutes from the others.
+
+### 4.4 Nothing to configure on the consumer side
+
+A consumer has no workflow to receive anything: the producer's `downstream` jobs clone and build
+it directly. It only has to expose each upstream through a `<upstream>.version` property (§0).
 
 ---
 
-## 5. TCK officiel (si applicable)
+## 5. Official TCK
 
-Si la spec implémentée a un TCK officiel (Jakarta, MicroProfile) :
-
-- **Module `<nom>-tck` HORS reactor** : Model 4.0.0 standalone, pas de
-  `<parent>`. Raison : ShrinkWrap Maven Resolver 3.3 (transitive du TCK
-  officiel) ne sait pas parser Model 4.1.0.
-- **Script `run-official-tck-<spec>.sh`** à la racine du repo, qui :
-  1. installe les artefacts non publics dans le M2 local
-  2. lance `mvn -f <nom>-tck/pom.xml test [-Dtest=…]`
-- **Ne PAS** ajouter le module tck au `<subprojects>` du parent.
-- **Ne PAS** le builder via `mvn -pl`.
+- The runner module `<name>-tck` is in the reactor, **inside the `tck` profile**: a plain
+  `mvn install` neither downloads nor runs anything of the TCK.
+- It is never published: `maven.deploy.skip` and `skipPublishing` for
+  `central-publishing-maven-plugin` in its pom (copy knock's `knock-tck/pom.xml`).
+- `run-official-tck-<spec>.sh` at the root runs it (`-Ptck`, plus `tck-official` when the suite
+  needs it), and must exit non-zero when the suite fails.
+- Declare it in `ci.tck.command` or `ci.tck.modules` (§4.2) so that pull requests are gated on it.
 
 ---
 
-## 6. Enregistrement dans `GestionProjet`
+## 6. Registration in the dependency graph
 
-### 6.1 Amorçage du fichier `data/vidocq_<nom-court>.json`
+The graph lives in [`Vidocq/dep-graph`](https://codefloe.com/Vidocq/dep-graph), not in this
+repository.
 
-Sur la machine locale (ou via le workflow `update-dep-graph.yml` une fois
-configuré) :
+1. Make sure the organisation secret `VIDOCQ_BOT_TOKEN` (write access to `Vidocq/dep-graph`) is
+   available to the new repository.
+2. Push `update-dep-graph.yml` to `main`, then run it once by hand (`workflow_dispatch`). It
+   extracts the repository's `io.vidocq.*` artifacts and dependencies (dependencies of every scope,
+   managed dependencies, plugins and their dependencies, annotation processor paths, profiles),
+   writes `data/Vidocq_<short-name>.json` and rebuilds `graph/inverted.json` in the same commit.
+   From then on it runs on every `main` push that touches a `pom.xml`.
+3. Check the result in `Vidocq/dep-graph`: the data file exists, and `graph/inverted.json` lists
+   the repository under the artifacts it consumes.
+
+To preview the data file locally, from a clone of `Vidocq/dep-graph`:
 
 ```bash
-cd /chemin/vers/GestionProjet
-bash scripts/extract_deps.sh /chemin/vers/<nom-court> "vidocq/<nom-court>" \
-  > data/vidocq_<nom-court>.json
-make validate     # vérifie conformité au schéma
-make graph        # rebuild graph/inverted.json
-git add data/vidocq_<nom-court>.json graph/inverted.json
-git commit -m "feat(graph): register vidocq/<nom-court>"
+bash scripts/extract_deps.sh /path/to/<short-name> Vidocq/<short-name>
 ```
 
-### 6.2 Validation du schéma
+---
 
-Le fichier doit valider contre `data/schema.json` :
-- `schema_version: 1`
-- `repo` matche `^vidocq/<nom>$`
-- chaque artefact dans `produces[]` a un `groupId` matchant
-  `^io\.vidocq(\.[A-Za-z0-9_-]+)*$`
-- `consumes[].scope` est dans
-  `[compile, runtime, provided, test, system, import, build]`
+## 7. Commits and pull requests
+
+- Conventional Commits, in English, with the project ticket (`feat(core): ... (#12)`).
+- Every commit is GPG-signed and signed off: `git commit -S -s` (CLA signed and key registered in
+  `Vidocq/governance`).
+- Author and committer: the human alone. When an AI tool helped, add a `Co-Authored-By:` trailer
+  naming it (see `AI-POLICY.md`).
+- Never write the CI-skip marker in a commit message, not even to explain it: Forgejo then starts
+  no workflow, and the pull request never gets its required checks.
 
 ---
 
-## 7. Convention sur les commits
+## 8. Checklist
 
-- **Pas de `Co-Authored-By: Claude`** ni de mention de l'IA (règle workspace).
-- Format conventional commits : `feat(<scope>): …`, `fix(<scope>): …`,
-  `ci(<scope>): …`, `M<jalon> — …` pour les jalons roadmap.
+### New repository
+- [ ] `pom.xml` with parent `io.vidocq:vidocq-parent`, groupId `io.vidocq.<short-name>`, Model 4.0.0
+- [ ] `.sdkmanrc`, `.gitignore`, Maven wrapper, `LICENSE`, `NOTICE`, `licenses/`, `CONTRIBUTING.md`
+- [ ] `README.md`, `CLAUDE.md`, `AGENTS.md`, `BUG.md`, `BENCH.md`, in English
+- [ ] TCK runner in the `tck` profile, never published, declared in `ci.tck.*` (if a TCK exists)
+- [ ] `.forgejo/workflows/`: `pr.yml` (template), `update-dep-graph.yml` (template), `ci.yml`,
+      `merge-bot.yml`, `notify-docs.yml`, `notify-slack.yml`, `sonar.yml`, `release.yml`,
+      `refresh-release-yml.yml`
+- [ ] Branch protection: signed commits, fast-forward only, the two required checks, manual merge
+      with automatic detection
+- [ ] First SNAPSHOT published on `central-snapshots`
 
----
+### `Vidocq/dep-graph`
+- [ ] `update-dep-graph` run once; `data/Vidocq_<short-name>.json` present
+- [ ] `graph/inverted.json` lists the new repository
 
-## 8. Checklist d'intégration (TL;DR)
-
-À cocher avant d'ouvrir la PR consommatrice dans `vidocq/vidocq` :
-
-### Côté nouveau repo producteur
-- [ ] `pom.xml` root Model 4.1.0, `root="true"`, groupId `io.vidocq.<nom>`
-- [ ] `.sdkmanrc`, `.gitignore`, `LICENSE`, `README.md`, `CLAUDE.md`
-- [ ] `BUG.md` et `BENCH.md` (au moins en stub)
-- [ ] `.claude/agents/` et `.claude/skills/` peuplés avec ce qui sert
-- [ ] `<nom>-tck/` en Model 4.0.0 standalone (si TCK) + script `run-official-tck-*.sh`
-- [ ] `.forgejo/workflows/ci.yml` (setup-maven + deploy-maven sur push main)
-- [ ] `.forgejo/workflows/pr.yml` (job unique `pr-validate` du template producteur)
-- [ ] `.forgejo/workflows/update-dep-graph.yml` activé une fois
-- [ ] **`0.2.0` publié sur `central-snapshots`** (sinon les PR aval
-      planteront à la résolution des dépendances amont)
-
-### Côté `vidocq/vidocq`
-- [ ] Property `<<nom>.version>` ajoutée au parent POM
-- [ ] Artefacts upstream listés dans `<dependencyManagement>` du parent
-- [ ] Wrapper `vidocq-runtime-<nom>-extension` créé sous `vidocq-runtime-extensions/`
-- [ ] Wrapper listé dans `<subprojects>` de `vidocq-runtime-extensions/pom.xml`
-- [ ] Wrapper référencé dans `<dependencyManagement>` du parent
-- [ ] Test de non-régression `M5` (ServiceLoader + JPMS provides)
-
-### Côté `GestionProjet`
-- [ ] `data/vidocq_<nom>.json` validé et commité
-- [ ] `graph/inverted.json` régénéré
-- [ ] Secret organisation `VIDOCQ_BOT_TOKEN` accessible au nouveau repo
+### `Vidocq/vidocq`
+- [ ] Property `<short-name>.version` and the brick's artifacts in `<dependencyManagement>`
+- [ ] Extension module under its domain aggregator, in the BOM and the extension catalog
+- [ ] Tests of the extension (ServiceLoader discovery, named modules)
 
 ---
 
-## 9. Mémo agents/skills associés
+## 9. References
 
-À utiliser proactivement pendant l'intégration :
-
-- `jpms-guardian` : audit du `module-info.java` de chaque module nouveau
-- `classfile-codegen` : revue de la génération de bytecode (proxies, indexers)
-- `virtual-threads-reviewer` : revue de la concurrence (pas de pool plateforme
-  sans raison)
-- `dependency-gatekeeper` : revue du `pom.xml` (zéro-dep / specs Jakarta+MP only)
-- `tck-runner` : exécution TCK + diagnostic (Model 4.0.0 standalone)
-- skill `/log-bug` : ajoute une entrée à `<repo>/BUG.md`
-- skill `/log-bench` : ajoute une entrée à `<repo>/BENCH.md`
-
----
-
-## 10. Références
-
-- Workspace : `vidocq/CLAUDE.md` (philosophie transverse, conventions BUG/BENCH)
-- Graphe : `GestionProjet/README.md` (mécanisme producteur/consommateur,
-  schéma data/, workflow templates)
-- Schéma data : `GestionProjet/data/schema.json`
-- Templates : `GestionProjet/workflow-templates/*.yml`
+- Workspace rules: the workspace `CLAUDE.md` and `vidocq-workspace/AGENTS.md`
+- CI architecture: [`README.md`](README.md)
+- Shared actions: [`Vidocq/ci` README](https://codefloe.com/Vidocq/ci/src/branch/main/README.md)
+- Dependency graph: [`Vidocq/dep-graph`](https://codefloe.com/Vidocq/dep-graph)
+- Merging and branch protection: [`Vidocq/governance` MAINTAINERS.md](https://codefloe.com/Vidocq/governance/src/branch/main/MAINTAINERS.md)
+- Changes spanning several repositories: [`vidocq-workspace/docs/changes-across-repositories.md`](https://codefloe.com/Vidocq/vidocq-workspace/src/branch/main/docs/changes-across-repositories.md)
