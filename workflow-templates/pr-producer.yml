@@ -14,8 +14,9 @@
 #                        - a train member (label `train-member`, a line `Train-top: #N` in the
 #                          description) builds nothing: it is validated through its train's top and
 #                          landed by ci/scripts/train-merge.py;
-#                        - a WIP pull request (title `WIP:`/`[WIP]`, a draft, label `WIP`) builds and
-#                          tests the producer, not its consumers;
+#                        - a WIP or blocked pull request (the maintainer's rule: `wip` anywhere in the
+#                          title, a `Draft:`/`[draft]` prefix, a draft, a label containing `wip` or
+#                          `blocked`) builds and tests the producer, not its consumers;
 #                        - an edit or a label change that leaves the pull request as it was reproduces
 #                          the verdict of the latest completed run on the same commit, builds nothing.
 #   governance-checks  CLA, GPG signature, Signed-off-by. Required context
@@ -36,9 +37,9 @@
 #                      impacted and downstream all succeeded. A skipped downstream passes ONLY for a
 #                      docs-only or test-only change set, or when no consumer is impacted: on Forgejo
 #                      a skipped job satisfies branch protection, so a skip must never pass when work
-#                      was expected. It FAILS a train member and a WIP pull request ("WIP: downstream
-#                      not run; remove WIP to validate"), and reproduces a verdict when the state job
-#                      said so. Every rule lives in the composite, resolved from @main: a change of
+#                      was expected. It FAILS a train member and a WIP or blocked pull request ("WIP:
+#                      downstream not run; remove WIP to validate", "Blocked: ..."), and reproduces a
+#                      verdict when the state job said so. Every rule lives in the composite, resolved from @main: a change of
 #                      policy needs no change here.
 #
 # Pull requests no longer check the eventual state, where every intermediate consumer is rebuilt
@@ -55,8 +56,8 @@ name: pr-validate
 on:
   pull_request:
     branches: [main]
-    # opened, synchronize, reopened: the defaults. edited: a title change (adding or removing `WIP:`)
-    # validates again. labeled, unlabeled: adding or removing `WIP` or `train-member` does too (Forgejo 16
+    # opened, synchronize, reopened: the defaults. edited: a title change (adding or removing `wip`, `Draft:`)
+    # validates again. labeled, unlabeled: adding or removing a wip, blocked or `train-member` label does too (Forgejo 16
     # sends one of them per label added or removed). A run whose change is irrelevant (a description edit)
     # reproduces the last verdict instead of building again: see the pr-state job.
     types: [opened, synchronize, reopened, edited, labeled, unlabeled]
