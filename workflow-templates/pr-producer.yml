@@ -271,6 +271,18 @@ jobs:
         # install runs the full lifecycle incl. integration-test/verify.
         run: mvn -B -ntp install
 
+      # Build the producer once (Vidocq/ci producer-artifacts, Vidocq/vidocq#285): the artifacts just
+      # installed at the PR version (no sources, javadoc or test jars) go to the run as
+      # producer-artifacts-<run id>, which the downstream jobs install, sha256-checked, instead of
+      # rebuilding the producer each (any problem: they rebuild). Published whenever the build runs and
+      # the downstream check may run, without waiting for the impacted matrix; the verdict job deletes
+      # it, and its one-day retention is the backstop.
+      - name: Share the producer artifacts with the downstream jobs
+        if: steps.changes.outputs.docs-only != 'true' && steps.changes.outputs.test-only != 'true' && steps.reuse.outputs.reused != 'true' && needs.pr-state.outputs.run-downstream == 'true'
+        uses: https://codefloe.com/Vidocq/ci/producer-artifacts@main
+        with:
+          producer-version: ${{ steps.version.outputs.version }}
+
       # The repository's own TCK, on the pull request rather than after the merge.
       #
       # Opt-in and DECLARED BY THE REPOSITORY, in its root pom.xml:
@@ -368,6 +380,8 @@ jobs:
       - uses: https://codefloe.com/Vidocq/ci/setup-maven@main
       - uses: https://codefloe.com/Vidocq/ci/build-one-consumer@main
         with:
+          # The producer artifacts the producer job shared; a missing or unsound one rebuilds it.
+          producer-artifacts: producer-artifacts-${{ github.run_id }}
           consumer: ${{ matrix.repo }}
           upstreams: ${{ fromJSON(needs.impacted.outputs.upstreams)[matrix.repo] }}
           producer-slug: ${{ github.repository }}
@@ -384,6 +398,14 @@ jobs:
     if: always()
     runs-on: vidocq-runner
     steps:
+      # The shared producer artifacts are only needed during the run. Never fails; independent of the
+      # verdict below, which reads `needs` only.
+      - name: Delete the shared producer artifacts
+        if: always()
+        uses: https://codefloe.com/Vidocq/ci/producer-artifacts@main
+        with:
+          mode: delete
+
       - name: Verdict
         id: gate
         uses: https://codefloe.com/Vidocq/ci/pr-validate-gate@main
