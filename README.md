@@ -9,7 +9,11 @@ tracker for cross-repository project work (for example `Vidocq/GestionProjet#9`,
 | [`workflow-templates/pr-producer.yml`](workflow-templates/pr-producer.yml) | **current** | The source of truth for `.forgejo/workflows/pr.yml` in every producer repository. Edit it here, then propagate. |
 | [`workflow-templates/update-dep-graph.yml`](workflow-templates/update-dep-graph.yml) | **current** | `.forgejo/workflows/update-dep-graph.yml`, identical in every repository. |
 | [`HOWTO_ADD_NEW_PROJECT.md`](HOWTO_ADD_NEW_PROJECT.md) | **current** | How to add a new repository to the ecosystem. |
-| `data/`, `graph/`, `scripts/`, `Makefile`, `.forgejo/workflows/build-graph.yml` | **obsolete** | An old copy of the dependency graph. See [The old graph copy](#the-old-graph-copy-in-this-repository). |
+| `.forgejo/workflows/pr.yml`, `merge-bot.yml` | **current** | This repository's own checks (the governance gate, below) and its `/merge` command. |
+
+The dependency graph is not here: it lives in [`Vidocq/dep-graph`](https://codefloe.com/Vidocq/dep-graph).
+The copy this repository used to hold (`data/`, `graph/`, `scripts/`, `Makefile`, `build-graph.yml`),
+frozen since the graph moved there on 2026-06-12 and read by nothing, was removed.
 
 ## Where things live
 
@@ -18,7 +22,7 @@ tracker for cross-repository project work (for example `Vidocq/GestionProjet#9`,
 | [`Vidocq/ci`](https://codefloe.com/Vidocq/ci) | The shared composite actions (`setup-maven`, `resolve-impacted`, `build-one-consumer`, `build-impacted`, `targeted-producer-tests`, `select-tck`, `deploy-maven`, `update-dep-graph`, the merge-bot...). Its [README](https://codefloe.com/Vidocq/ci/src/branch/main/README.md) documents every input. Workflows reference them by absolute URL, `https://codefloe.com/Vidocq/ci/<action>@main`. |
 | [`Vidocq/dep-graph`](https://codefloe.com/Vidocq/dep-graph) | The dependency graph between the repositories (`data/*.json`, `graph/inverted.json`) and its scripts. Public, so that pull requests from forks can read it without a token. |
 | [`Vidocq/vidocq-parent`](https://codefloe.com/Vidocq/vidocq-parent) | The parent POM of every brick. It sets `deployAtEnd=true` on `maven-deploy-plugin`, which the one-pass publication of `main` relies on. |
-| `Vidocq/GestionProjet` (this repository) | The templates and this description. |
+| `Vidocq/GestionProjet` (this repository) | The templates and this description. It holds no copy of the graph. |
 | Each repository, `.forgejo/workflows/` | `pr.yml`, `ci.yml`, `update-dep-graph.yml`, `merge-bot.yml`, `release.yml`, `sonar.yml`, and so on. |
 
 ## Pull-request validation: `pr.yml`
@@ -218,19 +222,11 @@ See [`HOWTO_ADD_NEW_PROJECT.md`](HOWTO_ADD_NEW_PROJECT.md).
 
 A composite action does not inherit `secrets.*`: each workflow passes them through `with:`.
 
-## The old graph copy in this repository
+## This repository's own checks
 
-`data/`, `graph/inverted.json`, `graph/README.md`, `scripts/` (with its tests), `Makefile` and
-`.forgejo/workflows/build-graph.yml` are an **obsolete copy** of the dependency graph. The graph
-moved to the public [`Vidocq/dep-graph`](https://codefloe.com/Vidocq/dep-graph) on 2026-06-12, and
-the data files here have not changed since then:
-
-- `ci/update-dep-graph` downloads its scripts from `Vidocq/dep-graph` and pushes the data there
-  (`graph-repo` defaults to `Vidocq/dep-graph`);
-- `ci/resolve-impacted`, `ci/build-impacted` (`build-impacted/resolve-consumers.sh`),
-  `ci/build-one-consumer` (graph pruning) and `ci/refresh-downstream-release-yml` read the graph
-  from `Vidocq/dep-graph`;
-- no workflow of any repository downloads anything from this repository.
-
-Read and change the graph, its format and its scripts in `Vidocq/dep-graph`. The copy here is
-kept until a maintainer removes it.
+GestionProjet has no Maven build. Its `pr.yml` runs only the governance gate, the
+`governance-checks` job of `Vidocq/ci/governance-checks`: the CLA of the pull request's author, and
+the GPG signature and the `Signed-off-by:` trailer of every commit (see
+[`CONTRIBUTING.md`](CONTRIBUTING.md)). It reports the context
+`pr-validate / governance-checks (pull_request)`, the check to require on `main`. A change to the
+templates is checked where it is propagated, by the `pr-validate` of each repository.
