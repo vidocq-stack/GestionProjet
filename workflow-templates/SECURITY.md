@@ -48,7 +48,7 @@ infrastructure is also welcome at this address.
 
 ## Response times
 
-These are targets, set by volunteer maintainers; we tell you when one cannot be met.
+Vidocq is an open source project run by its maintainers on a best-effort basis. These are targets, not commitments or a service level; we tell you when one cannot be met.
 
 | Step | Target |
 |---|---|
