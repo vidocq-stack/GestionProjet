@@ -8,6 +8,7 @@ tracker for cross-repository project work (for example `Vidocq/GestionProjet#9`,
 |---|---|---|
 | [`workflow-templates/pr-producer.yml`](workflow-templates/pr-producer.yml) | **current** | The source of truth for `.forgejo/workflows/pr.yml` in every producer repository. Edit it here, then propagate. |
 | [`workflow-templates/update-dep-graph.yml`](workflow-templates/update-dep-graph.yml) | **current** | `.forgejo/workflows/update-dep-graph.yml`, identical in every repository. |
+| [`workflow-templates/SECURITY.md`](workflow-templates/SECURITY.md) | **current** | The source of truth for `SECURITY.md` at the root of every published repository: supported versions, private reporting, response times, the vulnerability process. |
 | [`HOWTO_ADD_NEW_PROJECT.md`](HOWTO_ADD_NEW_PROJECT.md) | **current** | How to add a new repository to the ecosystem. |
 | `.forgejo/workflows/pr.yml`, `merge-bot.yml` | **current** | This repository's own checks (the governance gate, below) and its `/merge` command. |
 

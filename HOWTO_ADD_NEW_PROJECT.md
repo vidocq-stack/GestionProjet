@@ -36,6 +36,7 @@ described in [`README.md`](README.md).
 ├── .mvn/, mvnw, mvnw.cmd     Maven wrapper
 ├── LICENSE, NOTICE, licenses/   EPL-2.0 OR EUPL-1.2 OR GPL-2.0-or-later
 ├── CONTRIBUTING.md           CLA, GPG signature, DCO (copy from a brick)
+├── SECURITY.md               copy of workflow-templates/SECURITY.md, filled in
 ├── README.md                 product view: modules, prerequisites, commands
 ├── CLAUDE.md, AGENTS.md      guide for AI agents working in this repository
 ├── BUG.md, BENCH.md          bug and benchmark records (workspace rule)
@@ -102,6 +103,9 @@ do not repeat them. Copy the `<licenses>`, `<url>` and `<scm>` blocks from a bri
   the commands (`./mvnw -ntp install -DskipTests`, `./mvnw test`, `./run-official-tck-<spec>.sh`),
   the repository's specific constraints, and pointers to `BUG.md` and `BENCH.md`. They complement
   the workspace `CLAUDE.md`.
+- **`SECURITY.md`**: copy [`workflow-templates/SECURITY.md`](workflow-templates/SECURITY.md), replace
+  the placeholders and fill the supported-versions table. Keep the reporting channel and the
+  process identical to the template.
 - **`BUG.md` and `BENCH.md`**: create them with the repository, even empty (the `/log-bug` and
   `/log-bench` skills create them otherwise).
 - **`.claude/`** (optional): the agents and skills of the workspace that matter for this
@@ -251,7 +255,8 @@ bash scripts/extract_deps.sh /path/to/<short-name> Vidocq/<short-name>
 
 ### New repository
 - [ ] `pom.xml` with parent `io.vidocq:vidocq-parent`, groupId `io.vidocq.<short-name>`, Model 4.0.0
-- [ ] `.sdkmanrc`, `.gitignore`, Maven wrapper, `LICENSE`, `NOTICE`, `licenses/`, `CONTRIBUTING.md`
+- [ ] `.sdkmanrc`, `.gitignore`, Maven wrapper, `LICENSE`, `NOTICE`, `licenses/`, `CONTRIBUTING.md`,
+      `SECURITY.md` (from `workflow-templates/SECURITY.md`)
 - [ ] `README.md`, `CLAUDE.md`, `AGENTS.md`, `BUG.md`, `BENCH.md`, in English
 - [ ] TCK runner in the `tck` profile, never published, declared in `ci.tck.*` (if a TCK exists)
 - [ ] `.forgejo/workflows/`: `pr.yml` (template), `update-dep-graph.yml` (template), `ci.yml`,
